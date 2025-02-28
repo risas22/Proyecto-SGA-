@@ -200,17 +200,11 @@ public class Main {
 
     private static void addHerramienta() throws IOException {
         System.out.println("\n*** AÑADIR HERRAMIENTA A LA BASE DE DATOS ***");
-
-        // Crear una variable de bandera para comprobar si el código es único
-        boolean codigoValido = false;
+        boolean codigoValido = false;  // Crear una variable de bandera para comprobar si el código es único
         String codigoHerramienta = "";
-
-        // Mientras el código no sea único, pedirlo nuevamente
-        while (!codigoValido) {
+        while (!codigoValido) {      // Mientras el código no sea único, pedirlo nuevamente
             codigoHerramienta = AskData.askString("Código para la herramienta: ");
-
-            // Verificamos si el código ya está en la lista
-            if (herramientas.contains(new Herramienta(codigoHerramienta))) {
+            if (herramientas.contains(new Herramienta(codigoHerramienta))) {     // Verificamos si el código ya está en la lista
                 System.out.println("*** ERROR: NO PUEDE HABER DOS HERRAMIENTAS CON EL MISMO CÓDIGO *** \n");
             } else {
                 codigoValido = true;  // Si no está, el código es válido y salimos del bucle
