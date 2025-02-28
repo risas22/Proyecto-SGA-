@@ -4,3 +4,4 @@ Escalera-03-200.0-true
 Destornillador-04-40.0-false
 Ratón-06-30.0-false
 Papel-08-3.0-false
+pila-10-80.0-false

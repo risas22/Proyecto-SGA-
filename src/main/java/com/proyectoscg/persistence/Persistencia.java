@@ -132,6 +132,7 @@ public class Persistencia {
         reader.close();
         return contenedores;
     }
+
 //        reader = new BufferedReader(new FileReader(rutaPlaca));
 //        while ((line = reader.readLine()) != null) {
 //            String[] data = line.split("-");    //desglosamos los datos de la línea para crear un objeto Casa (lo separamos de la manera dentro del regex)
