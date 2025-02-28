@@ -5,3 +5,6 @@ Destornillador-04-40.0-false
 Ratón-06-30.0-false
 Papel-08-3.0-false
 pila-10-80.0-false
+sder-23-234.0-true
+der-123-345.0-true
+martillo-8-23.0-false

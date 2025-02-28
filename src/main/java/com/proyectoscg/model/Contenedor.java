@@ -5,11 +5,13 @@ import java.util.HashMap;
 public class Contenedor {
     private String codigoContenedor;
     private int capacidadContenedor;
+    private int capacidadUtilizada;
     private HashMap<Herramienta, Integer> inventario; // Cambié esto a privado para mantener el encapsulamiento
 
     public Contenedor(String codigoContenedor, int capacidad) {
         this.codigoContenedor = codigoContenedor;
         this.capacidadContenedor = capacidad;
+        this.capacidadUtilizada = 0;
         this.inventario = new HashMap<>();
     }
 
