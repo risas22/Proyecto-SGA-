@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
+
     private static ArrayList<Herramienta> herramientas;
     private static ArrayList<Contenedor> contenedores;
     private static Persistencia archivo ;
+
     public static void main(String[] args)  {
         herramientas = new ArrayList<>();
         contenedores = new ArrayList<>();
+
         try {
             archivo = new Persistencia();
             herramientas = archivo.readFicheroHerramienta();
             contenedores = archivo.readFicheroContenedor();
-
             int opcion;
             do {
                 menu();
@@ -33,12 +35,15 @@ public class Main {
                         addInventario();
                         break;
                     case 4:
-                        showInventario();
+                        showHerramientas();
                         break;
                     case 5:
                         showContenedor();
                         break;
                     case 6:
+                        //showInventario();
+                        break;
+                    case 7:
                         System.out.println("*** GRACIAS POR UTILIZAR LA APLICACIÓN ***");
                         break;
                 }
@@ -50,29 +55,26 @@ public class Main {
 
 
     private static void showContenedor() {
-        if (contenedores.isEmpty()) { // Si la lista de contenedores está vacía
-            System.out.println("*** NO HAY CONTENEDORES REGISTRADOS ***");
-        } else {
+        if (!isEmptyListContenedores()) { // Si la lista de contenedores está vacía
             System.out.println("*** LISTA DE CONTENEDORES ***");
             for (Contenedor c : contenedores) {
                 System.out.println(c); // Llama a toString() de cada contenedor
+
             }
         }
     }
 
 
-    private static void showInventario() {
-        if (herramientas.isEmpty()) { // Aquí cambiamos listaHerramientas por herramientas
-            System.out.println("*** NO HAY HERRAMIENTAS REGISTRADAS ***");
-        } else {
+    private static void showHerramientas() {
+        if (!isEmptyListHerramientas()) {
             System.out.println("*** LISTA DE HERRAMIENTAS ***");
-            for (Herramienta herramienta : herramientas) {
-                System.out.println(herramienta); // Llama a toString()
+            for (Herramienta h : herramientas) {
+                System.out.println(h);// Aquí cambiamos listaHerramientas por herramientas
             }
         }
     }
 
-    private static void addInventario() {
+    private static void addInventario() {         //método a revisar
         System.out.println("*** AÑADIR HERRAMIENTA A INVENTARIO ***");
         boolean continuar = true; // Variable de control para gestionar si continuamos o no
 
@@ -93,12 +95,10 @@ public class Main {
         String codigoContenedor = AskData.askString("Introduce el código del contenedor donde añadir la herramienta:");
         Contenedor contenedor = buscarContenedor(codigoContenedor);
         if (contenedor == null) {
-            System.out.println("*** ERROR: NO EXISTE NINGUN CÓDIGO CON ESE CÓDIGO ***");
+            System.out.println("*** ERROR: NO EXISTE NINGÚN CONTENEDOR CON ESE CÓDIGO ***");
             continuar = false; // No continuamos si no encontramos el contenedor
         }
-
-        // Si esta correcto, continuar con la lógica del inventario
-        if (continuar) {
+        if (continuar) {    // Si esta correcto, continuar con la lógica del inventario
             // Pedir la cantidad de herramientas a añadir
             int cantidad = AskData.askInt("Introduce la cantidad de herramientas a añadir:", "ERROR: INTRODUZCA UN NÚMERO VÁLIDO.", 1, 1000);
 
@@ -122,43 +122,38 @@ public class Main {
             }
 
         }
-    }
+    }    //método a revisar
 
 
-    private static Herramienta buscarHerramienta(String codigoHerramienta) {
-        for (Herramienta herramienta : herramientas) {
-            if (herramienta.getCodigoHerramienta().equalsIgnoreCase(codigoHerramienta)) {
-                return herramienta; // Devuelve la herramienta si la encuentra
+    private static Herramienta buscarHerramienta(String codigoHerramienta) {     //método a revisar
+        for (Herramienta h : herramientas) {
+            if (h.getCodigoHerramienta().equalsIgnoreCase(codigoHerramienta)) {
+                return h; // Devuelve la herramienta si la encuentra
             }
         }
-
-        // Si no se encuentra la herramienta, mostramos un mensaje de error pero no retornamos null
-        System.out.println("*** ERROR: NO EXISTE NINGUNA HERRAMIENTA CON ESE CÓDIGO ***");
         return null; // Esta parte sigue siendo necesaria para poder salir de la función
-    }
+    }    //método a revisar
 
-    private static Contenedor buscarContenedor(String codigoContenedor) {
-        for (Contenedor contenedor : contenedores) {
-            if (contenedor.getCodigoContenedor().equalsIgnoreCase(codigoContenedor)) {
-                return contenedor; // Devuelve el contenedor si lo encuentra
+    private static Contenedor buscarContenedor(String codigoContenedor) {    //método a revisar
+        for (Contenedor c : contenedores) {
+            if (c.getCodigoContenedor().equalsIgnoreCase(codigoContenedor)) {
+                return c; // Devuelve el contenedor si lo encuentra
             }
         }
-
-        // Si no se encuentra el contenedor, mostramos un mensaje de error pero no retornamos null
-        System.out.println("*** ERROR: NO EXISTE NINGUN CONTENEDOR CON ESE CÓDIGO ***");
         return null; // Esta parte sigue siendo necesaria para poder salir de la función
-    }
+    }      //método a revisar
 
     private static boolean isEmptyListHerramientas() {
         if (herramientas.isEmpty()) {
-            System.out.println("*** NO EXISTE NINGUNA HERRAMIENTA, PORFAVOR CREE ANTES UNA HERRAMIENTA *** \n");
+            System.out.println("*** NO EXISTE NINGUNA HERRAMIENTA CREADA, PORFAVOR CREE ANTES UNA NUEVA *** \n");
             return true;
         }
         return false;
     }
+
     private static boolean isEmptyListContenedores() {
         if (contenedores.isEmpty()) {
-            System.out.println("*** NO EXISTE NINGUN CONTENEDOR, PORFAVOR CREE ANTES UN CONTENEDOR *** \n");
+            System.out.println("*** NO EXISTE NINGÚN CONTENEDOR CREADO, PORFAVOR CREE ANTES UNO NUEVO *** \n");
             return true;
         }
         return false;
@@ -167,52 +162,57 @@ public class Main {
 
 
     private static void addContenedor() throws IOException {
-        System.out.println("\n *** AÑADIR CONTENEDOR A LA BASE DE DATOS ***");
-        String codigoContenedor = AskData.askString("Código para el contenedor: ");
+        System.out.println("\n*** MENÚ DE AÑADIR CONTENEDOR A LA BASE DE DATOS *** \n 1.Añadir contenedor nuevo \n 2.Salir");
+        int opcionContenedor = AskData.askInt("Elija una opción: ", "ERROR: INTRODUZCA UNA OPCIÓN VÁLIDA ENTRE 1 y 2", 1, 2);
+        switch(opcionContenedor) {
+            case 1:
+                String codigoContenedor  = AskData.askString("Código para el contenedor nuevo: ");
+                while (contenedores.contains(new Contenedor(codigoContenedor))) {
+                    System.out.println("*** ERROR: NO PUEDE HABER DOS CONTENEDORES CON EL MISMO CÓDIGO *** \n");
+                    codigoContenedor = AskData.askString("Código correcto para el contenedor: ");
+                }
+                // Pedir el resto de los datos solo si el código es válido
+                int capacidadContenedor = AskData.askInt("Dime la capacidad máxima de unidades pequeñas que se pueden guardar en este contenedor: ", "ERROR: EL NÚMERO DEBE SER SUPERIOR A 1", 1);
+                Contenedor newContenedor = new Contenedor(codigoContenedor, capacidadContenedor);    // Crear el nuevo contenedor (objeto) y agregarlo a la lista
+                contenedores.add(newContenedor);
+                archivo.writeContenedor(newContenedor);
+                System.out.println("*** CONTENEDOR AÑADIDO CORRECTAMENTE *** \n");
+                break;
 
-        // Mientras el código no sea único, pedirlo nuevamente
-        while (contenedores.contains(new Contenedor(codigoContenedor))) {
-            System.out.println("*** ERROR: NO PUEDE HABER DOS CONTENEDORES CON EL MISMO CÓDIGO *** \n");
-            codigoContenedor = AskData.askString("Código para el contenedor: ");
+            case 2:
+                System.out.println("*** VOLVIENDO AL MENÚ *** \n");
+                break;
+
         }
-        // Pedir el resto de los datos solo si el código es válido
-        int capacidadContenedor = AskData.askInt("Capacidad del contenedor en m² (largo x ancho): ", "ERROR: EL NÚMERO DEBE SER SUPERIOR A 1", 1);
-        Contenedor newContenedor = new Contenedor(codigoContenedor, capacidadContenedor);    // Crear el nuevo contenedor (objeto) y agregarlo a la lista
-        contenedores.add(newContenedor);
-        archivo.writeContenedor(newContenedor);
-        System.out.println("*** CONTENEDOR AÑADIDO CORRECTAMENTE *** \n");
     }
 
 
 
     private static void addHerramienta() throws IOException {
         System.out.println("\n*** MENÚ DE AÑADIR HERRAMIENTA A LA BASE DE DATOS *** \n 1.Añadir herramienta nueva \n 2.Salir");
-        int opcion = AskData.askInt("Elija una opción: ", "ERROR:INTRODUZCA UNA OPCIÓN VÁLIDA.", 1, 2);
-        switch(opcion){
+        int opcionHerramienta = AskData.askInt("Elija una opción: ", "ERROR: INTRODUZCA UNA OPCIÓN VÁLIDA ENTRE 1 y 2.", 1, 2);
+        switch(opcionHerramienta){
             case 1:
-                String codigoHerramienta = AskData.askString("Código para la herramienta: ");
+                String codigoHerramienta = AskData.askString("Código para la herramienta nueva: ");
                 while (herramientas.contains(new Herramienta(codigoHerramienta))) {
                     System.out.println("*** ERROR: NO PUEDE HABER DOS HERRAMIENTAS CON EL MISMO CÓDIGO *** \n");
-                    codigoHerramienta = AskData.askString("Código para la herramienta: ");
+                    codigoHerramienta = AskData.askString("Código correcto para la herramienta: ");
                 }
                 // Pedir el resto de los datos solo si el código es válido
                 String nombre = AskData.askString("Nombre de la herramienta: ");
-                double volumen = AskData.askDouble("Medida de la herramienta en cm² (largo x ancho): ", "ERROR: EL NÚMERO DEBE SER SUPERIOR A 1", 1);
-                boolean isGrande = AskData.askBoolean("¿Es una herramienta grande (S/N)?: ", "ERROR: LA RESPUESTA DEBE SER S O N", "S", "N");
-
-                // Crear la nueva herramienta y agregarla a la lista
-                Herramienta newHerramienta = new Herramienta(nombre, codigoHerramienta, volumen, isGrande);
+                boolean isSmall = AskData.askBoolean("¿Es una herramienta pequeña, de ser así se guardará en contenedores (S/N)?: ", "ERROR: LA RESPUESTA DEBE SER S O N", "S", "N");
+                Herramienta newHerramienta = new Herramienta(nombre, codigoHerramienta,isSmall);   // Crear la nueva herramienta y agregarla a la lista
                 herramientas.add(newHerramienta);
                 archivo.writeHerramienta(newHerramienta);
 
                 System.out.println("*** HERRAMIENTA AÑADIDA CORRECTAMENTE *** \n");
                 break;
             case 2:
-                System.out.println("*** VOLVIENDO AL MENÚ ***");
+                System.out.println("*** VOLVIENDO AL MENÚ ***\n");
                 break;
         }
 
-        }
+    }
 
 
 
@@ -220,13 +220,14 @@ public class Main {
 
 
     private static void menu() {        //menu output
-        System.out.println("*** Bienvenido a la App de Gestión de Almacenamiento ***\n" +
+        System.out.println("*** BIENVENIDO A LA APP DE GESTIÓN DE ALMACENAMIENTO ***\n" +
                 "1. Añadir Herramienta.\n" +
                 "2. Añadir Contenedor.\n" +
                 "3. Añadir Inventario de Herramientas.\n" +
-                "4. Mostrar Inventario.\n" +
+                "4. Mostrar Herramientas.\n" +
                 "5. Mostrar Contenedor.\n" +
-                "6. Sortir.");
+                "6. Mostrar Inventario.\n" +
+                "7. Sortir.");
 
 
     }

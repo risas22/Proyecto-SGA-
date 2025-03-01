@@ -15,6 +15,13 @@ public class Contenedor {
         this.inventario = new HashMap<>();
     }
 
+    public Contenedor(String codigoContenedor, int capacidadContenedor, int capacidadUtilizada) {
+        this.codigoContenedor = codigoContenedor;
+        this.capacidadContenedor = capacidadContenedor;
+        this.capacidadUtilizada = capacidadUtilizada;
+        this.inventario = new HashMap<>();
+    }
+
     public Contenedor(String codigo) {
         this.codigoContenedor = codigo;
     }
@@ -24,30 +31,40 @@ public class Contenedor {
         Contenedor c = (Contenedor) obj;
         return this.codigoContenedor.equalsIgnoreCase(c.getCodigoContenedor());
     }
-
+    // Getters
     public String getCodigoContenedor() {
         return codigoContenedor;
     }
 
-    public int getCapacidad() {
+    public int getCapacidadContenedor() {
         return capacidadContenedor;
     }
 
-    // Método getter para acceder al inventario
+    public int getCapacidadUtilizada() {
+        return capacidadUtilizada;
+    }
+
+    //Setters
+    public void setCapacidadUtilizada(int capacidadUtilizada) {
+        this.capacidadUtilizada = capacidadUtilizada;
+    }
+
+    // Método getter para acceder al inventario , esto hay que revisarlo
     public HashMap<Herramienta, Integer> getInventario() {
         return inventario;
-    }
+    }  //método a revisar
 
     @Override
     public String toString() {
         return String.format(
                 "+-------------------+---------------------------------------+\n" +
-                        "| Propiedad         | Valor                                 |\n" +
-                        "+-------------------+---------------------------------------+\n" +
-                        "| Código Contenedor | %-35s |\n" +
-                        "| Capacidad         | %-35d m²                       |\n" +
-                        "+-------------------+---------------------------------------+",
-                codigoContenedor, capacidadContenedor);
+                        "| Propiedad                     | Valor           \n" +
+                        "+-------------------------------+---------------------------+\n" +
+                        "| Código Contenedor             | %-35s  \n" +
+                        "| Capacidad Máxima de Unidades  | %-35s  \n" +
+                        "| Unidades Guardadas            | %-35s  \n" +
+                        "+-------------------------------+---------------------------+\n",
+                codigoContenedor, capacidadContenedor,capacidadUtilizada);
     }
 
 }

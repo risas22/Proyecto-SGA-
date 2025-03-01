@@ -1,10 +1,5 @@
-Taladro-01-80.0-false
-Cortacésped-02-100.0-true
-Escalera-03-200.0-true
-Destornillador-04-40.0-false
-Ratón-06-30.0-false
-Papel-08-3.0-false
-pila-10-80.0-false
-sder-23-234.0-true
-der-123-345.0-true
-martillo-8-23.0-false
+tornillo-123-true
+destornillador-234-true
+martillo-345-true
+escalera-456-false
+corta césped-567-false

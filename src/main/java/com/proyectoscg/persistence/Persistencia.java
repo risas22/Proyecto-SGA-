@@ -48,38 +48,33 @@ public class Persistencia {
     //  Crear metodo para escribir en el fichero
     public void writeHerramienta(Herramienta h) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaHerramienta, true));
-        writer.write(h.getNombre() + "-" + h.getCodigoHerramienta() + "-" + h.getVolumen() + "-" + h.isGrande());
+        writer.write(h.getNombre() + "-" + h.getCodigoHerramienta() + "-" + h.isSmall());
         writer.newLine();
         writer.close();
     }
 
     public void writeContenedor(Contenedor c ) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaContenedor, true));
-        writer.write(c.getCodigoContenedor() + "-" + c.getCapacidad());
+        writer.write(c.getCodigoContenedor() + "-" + c.getCapacidadContenedor() + "-" + c.getCapacidadUtilizada());
         writer.newLine();
         writer.close();
     }
 
-    public void writeInventario(Contenedor c) throws IOException {
-        // Obtenemos el inventario del contenedor (HashMap)
-        HashMap<Herramienta, Integer> inventario = c.getInventario();
+    public void writeInventario(Contenedor c) throws IOException {       //método a revisar
+        HashMap<Herramienta, Integer> inventario = c.getInventario();     // Obtenemos el inventario del contenedor (HashMap)
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaInventario, true))) {    // Usamos un BufferedWriter con try-with-resources para asegurar el cierre automático
 
-        // Usamos un BufferedWriter con try-with-resources para asegurar el cierre automático
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaInventario, true))) {
 
-            // Recorremos el inventario del contenedor
-            for (Herramienta herramienta : inventario.keySet()) {
-                // Obtenemos la cantidad de la herramienta en el contenedor
-                int cantidad = inventario.get(herramienta);
-                // Escribimos en el archivo con el formato: codigoContenedor-herramienta-cantidad
-                writer.write(c.getCodigoContenedor() + "-" + herramienta.getCodigoHerramienta() + "-" + cantidad);
+            for (Herramienta herramienta : inventario.keySet()) {   // Recorremos el inventario del contenedor
+                int cantidad = inventario.get(herramienta);     // Obtenemos la cantidad de la herramienta en el contenedor
+                writer.write(c.getCodigoContenedor() + "-" + herramienta.getCodigoHerramienta() + "-" + cantidad);    // Escribimos en el archivo con el formato: codigoContenedor-herramienta-cantidad
                 writer.newLine(); // Salto de línea
             }
         } catch (IOException ex) {
             // Manejo de excepciones
             System.out.println("Error al escribir el inventario: " + ex.getMessage());
         }
-    }
+    }      //método a revisar
 
 
 
@@ -92,13 +87,13 @@ public class Persistencia {
         reWriter.close();
     }
 
-    public void reWriteContenedor(ArrayList<Contenedor> contenedores) throws IOException {
+    public void reWriteContenedor(ArrayList<Contenedor> contenedores) throws IOException {         //método a revisar
         BufferedWriter reWriter = new BufferedWriter(new FileWriter(rutaContenedor, false));
         for (Contenedor i : contenedores){
             writeContenedor(i);
         }
         reWriter.close();
-    }
+    }  //método a revisar
 
     // Crear metodo para leer el fichero
     public ArrayList<Herramienta> readFicheroHerramienta() throws IOException {
@@ -109,9 +104,8 @@ public class Persistencia {
             String[] data = line.split("-");      //desglosamos los datos de la línea para crear un objeto Casa (lo separamos de la manera dentro del regex)
             String nombre = data[0];
             String codigoHerramienta = data[1];
-            double volumen = Double.parseDouble(data[2]);
-            boolean isGrande = Boolean.parseBoolean(data[3]);
-            Herramienta newHerramienta = new Herramienta(nombre, codigoHerramienta, volumen, isGrande);
+            boolean isSmall = Boolean.parseBoolean(data[2]);
+            Herramienta newHerramienta = new Herramienta(nombre, codigoHerramienta, isSmall);
             herramientas.add(newHerramienta);
         }
         reader.close();
@@ -125,8 +119,9 @@ public class Persistencia {
         while ((line = reader.readLine()) != null) {
             String[] data = line.split("-");      //desglosamos los datos de la línea para crear un objeto Casa (lo separamos de la manera dentro del regex)
             String codigoContenedor = data[0];
-            int volumen = Integer.parseInt(data[1]);
-            Contenedor newContenedor = new Contenedor(codigoContenedor, volumen);
+            int capacidadContenedor = Integer.parseInt(data[1]);
+            int capacidadUtilizada = Integer.parseInt(data[2]);
+            Contenedor newContenedor = new Contenedor(codigoContenedor, capacidadContenedor, capacidadUtilizada);
             contenedores.add(newContenedor);
         }
         reader.close();
