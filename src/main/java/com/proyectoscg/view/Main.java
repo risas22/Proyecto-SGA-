@@ -23,7 +23,7 @@ public class Main {
             int opcion;
             do {
                 menu();
-                opcion = AskData.askInt("Escoja una opción del menú: ", "ERROR: NÚMERO NO VÁLIDO: Tienes que escoger un número entre 1 y 6", 1, 6);
+                opcion = AskData.askInt("Escoja una opción del menú: ", "ERROR: NÚMERO NO VÁLIDO: Tienes que escoger un número entre 1 y 7", 1, 7);
                 switch (opcion) {
                     case 1:
                         addHerramienta();
@@ -47,7 +47,7 @@ public class Main {
                         System.out.println("*** GRACIAS POR UTILIZAR LA APLICACIÓN ***");
                         break;
                 }
-            } while (opcion != 6);
+            } while (opcion != 7);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
