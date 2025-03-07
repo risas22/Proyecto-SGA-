@@ -1,25 +1,16 @@
 package com.proyectoscg.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Contenedor {
     private String codigoContenedor;
     private int capacidadContenedor;
-    private int capacidadUtilizada;
-    private HashMap<Herramienta, Integer> inventario; // Cambié esto a privado para mantener el encapsulamiento
+    private ArrayList<Inventario> inventario; // Cambié esto a privado para mantener el encapsulamiento
 
     public Contenedor(String codigoContenedor, int capacidad) {
         this.codigoContenedor = codigoContenedor;
         this.capacidadContenedor = capacidad;
-        this.capacidadUtilizada = 0;
-        this.inventario = new HashMap<>();
-    }
-
-    public Contenedor(String codigoContenedor, int capacidadContenedor, int capacidadUtilizada) {
-        this.codigoContenedor = codigoContenedor;
-        this.capacidadContenedor = capacidadContenedor;
-        this.capacidadUtilizada = capacidadUtilizada;
-        this.inventario = new HashMap<>();
+        this.inventario = new ArrayList<>();
     }
 
     public Contenedor(String codigo) {
@@ -40,19 +31,19 @@ public class Contenedor {
         return capacidadContenedor;
     }
 
-    public int getCapacidadUtilizada() {
-        return capacidadUtilizada;
+    public int capacidadRestante(){
+        int disponible = capacidadContenedor;
+        for (Inventario i : inventario) {
+            disponible -= i.getCantidad();
+        }
+        return disponible;
     }
 
-    //Setters
-    public void setCapacidadUtilizada(int capacidadUtilizada) {
-        this.capacidadUtilizada = capacidadUtilizada;
+    public void anadirHerramienta (Herramienta h,int cantidad){       //método para añadir electros a la lista, lo tenemos que llamar aquí para utilizarlo en el main
+        Inventario i = new Inventario(h, cantidad);
+        inventario.add(i);                                      // ya que en el main solo existe la lista de casas
     }
 
-    // Método getter para acceder al inventario , esto hay que revisarlo
-    public HashMap<Herramienta, Integer> getInventario() {
-        return inventario;
-    }  //método a revisar
 
     @Override
     public String toString() {
@@ -62,9 +53,8 @@ public class Contenedor {
                         "+-------------------------------+---------------------------+\n" +
                         "| Código Contenedor             | %-35s  \n" +
                         "| Capacidad Máxima de Unidades  | %-35s  \n" +
-                        "| Unidades Guardadas            | %-35s  \n" +
                         "+-------------------------------+---------------------------+\n",
-                codigoContenedor, capacidadContenedor,capacidadUtilizada);
+                codigoContenedor, capacidadContenedor);
     }
 
 }

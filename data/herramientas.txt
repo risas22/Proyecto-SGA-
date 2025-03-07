@@ -1,5 +1,0 @@
-tornillo-123-true
-destornillador-234-true
-martillo-345-true
-escalera-456-false
-corta césped-567-false

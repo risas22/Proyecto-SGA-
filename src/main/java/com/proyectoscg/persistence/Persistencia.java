@@ -55,28 +55,10 @@ public class Persistencia {
 
     public void writeContenedor(Contenedor c ) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaContenedor, true));
-        writer.write(c.getCodigoContenedor() + "-" + c.getCapacidadContenedor() + "-" + c.getCapacidadUtilizada());
+        writer.write(c.getCodigoContenedor() + "-" + c.getCapacidadContenedor());
         writer.newLine();
         writer.close();
     }
-
-    public void writeInventario(Contenedor c) throws IOException {       //método a revisar
-        HashMap<Herramienta, Integer> inventario = c.getInventario();     // Obtenemos el inventario del contenedor (HashMap)
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaInventario, true))) {    // Usamos un BufferedWriter con try-with-resources para asegurar el cierre automático
-
-
-            for (Herramienta herramienta : inventario.keySet()) {   // Recorremos el inventario del contenedor
-                int cantidad = inventario.get(herramienta);     // Obtenemos la cantidad de la herramienta en el contenedor
-                writer.write(c.getCodigoContenedor() + "-" + herramienta.getCodigoHerramienta() + "-" + cantidad);    // Escribimos en el archivo con el formato: codigoContenedor-herramienta-cantidad
-                writer.newLine(); // Salto de línea
-            }
-        } catch (IOException ex) {
-            // Manejo de excepciones
-            System.out.println("Error al escribir el inventario: " + ex.getMessage());
-        }
-    }      //método a revisar
-
-
 
 
     public void reWriteHerramienta(ArrayList<Herramienta> herramientas) throws IOException {
@@ -120,11 +102,11 @@ public class Persistencia {
             String[] data = line.split("-");      //desglosamos los datos de la línea para crear un objeto Casa (lo separamos de la manera dentro del regex)
             String codigoContenedor = data[0];
             int capacidadContenedor = Integer.parseInt(data[1]);
-            int capacidadUtilizada = Integer.parseInt(data[2]);
-            Contenedor newContenedor = new Contenedor(codigoContenedor, capacidadContenedor, capacidadUtilizada);
+            Contenedor newContenedor = new Contenedor(codigoContenedor, capacidadContenedor);
             contenedores.add(newContenedor);
         }
         reader.close();
+        // Leeras inventario
         return contenedores;
     }
 
