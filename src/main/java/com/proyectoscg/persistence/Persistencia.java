@@ -1,6 +1,7 @@
 package com.proyectoscg.persistence;
 import com.proyectoscg.model.Contenedor;
 import com.proyectoscg.model.Herramienta;
+import com.proyectoscg.model.Inventario;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -60,6 +61,13 @@ public class Persistencia {
         writer.close();
     }
 
+    public void writeInventario(Contenedor c, Inventario i ) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(rutaInventario, true));
+        writer.write(c.getCodigoContenedor() + "-" + i.getHerramienta().getCodigoHerramienta() + "-" + i.getCantidad());
+        writer.newLine();
+        writer.close();
+    }
+
 
     public void reWriteHerramienta(ArrayList<Herramienta> herramientas) throws IOException {
         BufferedWriter reWriter = new BufferedWriter(new FileWriter(rutaHerramienta, false));
@@ -69,13 +77,13 @@ public class Persistencia {
         reWriter.close();
     }
 
-    public void reWriteContenedor(ArrayList<Contenedor> contenedores) throws IOException {         //método a revisar
+    public void reWriteContenedor(ArrayList<Contenedor> contenedores) throws IOException {
         BufferedWriter reWriter = new BufferedWriter(new FileWriter(rutaContenedor, false));
         for (Contenedor i : contenedores){
             writeContenedor(i);
         }
         reWriter.close();
-    }  //método a revisar
+    }
 
     // Crear metodo para leer el fichero
     public ArrayList<Herramienta> readFicheroHerramienta() throws IOException {
@@ -106,44 +114,9 @@ public class Persistencia {
             contenedores.add(newContenedor);
         }
         reader.close();
-        // Leeras inventario
         return contenedores;
     }
 
-//        reader = new BufferedReader(new FileReader(rutaPlaca));
-//        while ((line = reader.readLine()) != null) {
-//            String[] data = line.split("-");    //desglosamos los datos de la línea para crear un objeto Casa (lo separamos de la manera dentro del regex)
-//            String nif = data[0];
-//            int surface = Integer.parseInt(data[1]);
-//            double price = Double.parseDouble(data[2]);
-//            int powerPlaca = Integer.parseInt(data[3]);
-//            Placa newPlaca = new Placa (surface, price , powerPlaca);
-//            int posicionCasa = casas.indexOf(new Casa(nif));
-//            System.out.println(nif);
-//            System.out.println(posicionCasa);
-//            Casa c = casas.get(posicionCasa);
-//            c.anadirPlaca_Lista(newPlaca);
-//
-//        }
-//        reader.close();
-//
-//        reader = new BufferedReader(new FileReader(rutaElectro));
-//        while((line = reader.readLine()) != null){
-//            String [] data = line.split("-");
-//            String nif = data[0];
-//            String description = data[1];
-//            int powerElectro = Integer.parseInt(data[2]);
-//            boolean interruptorElectros = Boolean.parseBoolean(data[3]);
-//            Electrodomesticos newElectro = new Electrodomesticos (description,powerElectro,interruptorElectros);
-//            int posicionCasa = casas.indexOf(new Casa(nif));
-//
-//            Casa c = casas.get(posicionCasa);
-//            c.anadirElectro_Lista(newElectro);
-//
-//        }
-//        reader.close();
-//
-//        return casas;   //devolvemos solo la lista (casas) para sacarla en el main para que pueda leer que hemos creado al principio del metodo cuando creamos la lista
-//    }
+
 
 }

@@ -4,7 +4,7 @@ import com.proyectoscg.model.Herramienta;
 import com.proyectoscg.persistence.Persistencia;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class Main {
 
@@ -23,7 +23,7 @@ public class Main {
             int opcion;
             do {
                 menu();
-                opcion = AskData.askInt("Escoja una opción del menú: ", "ERROR: NÚMERO NO VÁLIDO: Tienes que escoger un número entre 1 y 7", 1, 7);
+                opcion = AskData.askInt("Escoja una opción del menú: ", "ERROR: NÚMERO NO VÁLIDO: Tienes que escoger un número entre 1 y 8", 1, 8);
                 switch (opcion) {
                     case 1:
                         addHerramienta();
@@ -41,27 +41,54 @@ public class Main {
                         showContenedor();
                         break;
                     case 6:
-                        //showInventario();
+                        showInventarioContenedor();
                         break;
                     case 7:
+                        showInventarioAll();
+                        break;
+                    case 8:
                         System.out.println("*** GRACIAS POR UTILIZAR LA APLICACIÓN ***");
                         break;
                 }
-            } while (opcion != 7);
+            } while (opcion != 8);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    private static int preguntarCodigoContenedor(){
-        String codigoContenedor = AskData.askString("Dime el código del contenedor a donde quieras añadir la herramienta: " );
+    private static void showInventarioAll(){
+        if (!isEmptyListHerramientas() && !isEmptyListContenedores()){
+            System.out.println("*** INVENTARIO GENERAL DE HERRAMIENTAS ***");
+            for (Contenedor c : contenedores) {
+                System.out.println(c.mostrarInventario());
+            }
+        }
+    }
+
+
+
+
+    private static void showInventarioContenedor() {
+        if (!isEmptyListContenedores()) {
+            System.out.println("*** LISTA DE CONTENEDORES ***");
+            showContenedor();
+            int codigoContenedor = preguntarIndexOffContenedor();
+            Contenedor c = contenedores.get(codigoContenedor);
+            System.out.println(c.mostrarInventario());
+        }
+    }
+
+
+    private static int preguntarIndexOffContenedor(){
+        String codigoContenedor = AskData.askString("Dime el código del contenedor : " );
         int indexContenedor = contenedores.indexOf(new Contenedor(codigoContenedor));
         if (indexContenedor < 0 ){
             System.out.println("*** ERROR: ESTE CONTENEDOR NO EXISTE ***\n");
         }
         return indexContenedor;
     }
-    private static int preguntarCodigoHerramienta(){
+
+    private static int preguntarIndexOffHerramienta(){
         String codigoHerramienta = AskData.askString("Dime el código de la herramienta que desea añadir al contenedor: ");
         int indexHerramienta = herramientas.indexOf(new Herramienta(codigoHerramienta));
         if (indexHerramienta < 0 ){
@@ -69,33 +96,47 @@ public class Main {
         }
         return indexHerramienta;
     }
+
     private static void addInventario(){
-        if (!isEmptyListHerramientas()){
+        if (!isEmptyListHerramientas() && !isEmptyListContenedores()){
             System.out.println("*** APARTADO DE AÑADIR HERRAMIENTAS A CONTENEDORES ***");
-            int indexHerramienta = preguntarCodigoHerramienta();
-            if (indexHerramienta >=0 ){
+            int indexHerramienta = preguntarIndexOffHerramienta();
+            if (indexHerramienta >= 0 ){
                 Herramienta h = herramientas.get(indexHerramienta);
                 if (!h.isSmall()){
                     System.out.println("*** ESTA HERRAMIENTA ES GRANDE Y NO VA EN CONTENEDORES ***\n");
                 }
                 else{
-                    showContenedor();
-                    int indexContenedor = preguntarCodigoContenedor();
-                    if (indexContenedor >= 0){
-                        int cantidadHerramienta = AskData.askInt("Dime la cantidad de unidades que quieras añadir","ERROR: TIENE QUE SER UNA CANTIDAD SUPERIOR A 1",1);
-                        Contenedor c = contenedores.get(indexContenedor);
-                        if (c.capacidadRestante() >= cantidadHerramienta ){
+                    int cantidadHerramienta = AskData.askInt("Dime la cantidad de unidades que quieras añadir: ","ERROR: TIENE QUE SER UNA CANTIDAD MÍNIMA DE 1",1);
+                    if(showContenedorDisponibles(cantidadHerramienta)){
+                        int indexContenedor = preguntarIndexOffContenedor();
+                        if (indexContenedor >= 0) {
+                            Contenedor c = contenedores.get(indexContenedor);
+                            if (c.capacidadRestante() >= cantidadHerramienta) {
+                                c.anadirHerramienta(h, cantidadHerramienta);
 
+
+                                System.out.println("*** SE HAN AÑADIDO CORRECTAMENTE LAS UNIDADES AL CONTENEDOR ***\n");
+                            }
+                            else{
+                                System.out.println("*** NO HAY SUFICIENTE ESPACIO EN ESTE CONTENEDOR ***\n");
+                            }
                         }
                     }
+                    else{
+                        System.out.println("*** NO HAY NINGÚN CONTENEDOR CON SUFICIENTE ESPACIO, PRUEBE A UBICAR MENOS UNIDADES  ***\n");
+                    }
+
+
 
                 }
+
             }
+
         }
 
 
     }
-
 
     private static void showContenedor() {
         if (!isEmptyListContenedores()) { // Si la lista de contenedores está vacía
@@ -105,6 +146,20 @@ public class Main {
 
             }
         }
+    }
+
+    private static boolean showContenedorDisponibles(int cantidadDeHerramientas) {
+        boolean disponible = false;
+        if (!isEmptyListContenedores()) { // Si la lista de contenedores está vacía
+            for (Contenedor c : contenedores) {
+                if (c.capacidadRestante() >= cantidadDeHerramientas) {
+                    System.out.println("*** LISTA DE CONTENEDORES DISPONIBLES ***");
+                    System.out.println(c);    // Llama a toString() de cada contenedor
+                     disponible = true;
+                }
+
+            }
+        }return disponible;
     }
 
 
@@ -117,74 +172,7 @@ public class Main {
         }
     }
 
-//    private static void addInventario() {         //método a revisar
-//        System.out.println("*** AÑADIR HERRAMIENTA A INVENTARIO ***");
-//        boolean continuar = true; // Variable de control para gestionar si continuamos o no
-//
-//        if (isEmptyListHerramientas() || isEmptyListContenedores()) {
-//            System.out.println("*** NO HAY HERRAMIENTAS NI CONTENEDORES CREADOS ***");
-//            continuar = false; // No continuamos si no hay herramientas o contenedores
-//        }
-//
-//        // Pedir el código de la herramienta
-//        String codigoHerramienta = AskData.askString("Introduce el código de la herramienta a añadir:");
-//        Herramienta herramienta = buscarHerramienta(codigoHerramienta);
-//        if (herramienta == null) {
-//            System.out.println("*** ERROR: NO EXISTE NINGUNA HERRAMIENTA CON ESE CÓDIGO ***");
-//            continuar = false; // No continuamos si no encontramos la herramienta
-//        }
-//
-//        // Pedir el código del contenedor
-//        String codigoContenedor = AskData.askString("Introduce el código del contenedor donde añadir la herramienta:");
-//        Contenedor contenedor = buscarContenedor(codigoContenedor);
-//        if (contenedor == null) {
-//            System.out.println("*** ERROR: NO EXISTE NINGÚN CONTENEDOR CON ESE CÓDIGO ***");
-//            continuar = false; // No continuamos si no encontramos el contenedor
-//        }
-//        if (continuar) {    // Si esta correcto, continuar con la lógica del inventario
-//            // Pedir la cantidad de herramientas a añadir
-//            int cantidad = AskData.askInt("Introduce la cantidad de herramientas a añadir:", "ERROR: INTRODUZCA UN NÚMERO VÁLIDO.", 1, 1000);
-//
-//            // Usar el getter para obtener el inventario
-//            HashMap<Herramienta, Integer> inventario = contenedor.getInventario();
-//
-//            // Agregar la herramienta al inventario del contenedor
-//            int cantidadActual = inventario.getOrDefault(herramienta, 0); // Obtener la cantidad actual de la herramienta
-//            inventario.put(herramienta, cantidadActual + cantidad); // Actualizar la cantidad
-//
-//            System.out.println("*** SE HAN AÑADIDO " + cantidad + " UNIDADES DE " + herramienta.getNombre() + " AL CONTENEDOR " + codigoContenedor + " ***");
-//
-//            System.out.println("\n================================");
-//
-//            // Guardar los cambios en el archivo
-//            try {
-//                archivo.writeContenedor(contenedor);
-//                archivo.writeInventario(contenedor); // Guardar también el inventario
-//            } catch (IOException ex) {
-//                System.out.println("ERROR AL GUARDAR LOS CAMBIOS: " + ex.getMessage());
-//            }
-//
-//        }
-//    }    //método a revisar
 
-
-    private static Herramienta buscarHerramienta(String codigoHerramienta) {     //método a revisar
-        for (Herramienta h : herramientas) {
-            if (h.getCodigoHerramienta().equalsIgnoreCase(codigoHerramienta)) {
-                return h; // Devuelve la herramienta si la encuentra
-            }
-        }
-        return null; // Esta parte sigue siendo necesaria para poder salir de la función
-    }    //método a revisar
-
-    private static Contenedor buscarContenedor(String codigoContenedor) {    //método a revisar
-        for (Contenedor c : contenedores) {
-            if (c.getCodigoContenedor().equalsIgnoreCase(codigoContenedor)) {
-                return c; // Devuelve el contenedor si lo encuentra
-            }
-        }
-        return null; // Esta parte sigue siendo necesaria para poder salir de la función
-    }      //método a revisar
 
     private static boolean isEmptyListHerramientas() {
         if (herramientas.isEmpty()) {
@@ -269,8 +257,9 @@ public class Main {
                 "3. Añadir Inventario de Herramientas.\n" +
                 "4. Mostrar Herramientas.\n" +
                 "5. Mostrar Contenedor.\n" +
-                "6. Mostrar Inventario.\n" +
-                "7. Sortir.");
+                "6. Mostrar Inventario por Contenedor.\n" +
+                "7. Mostrar Inventario total de Herramientas.\n" +
+                "8. Sortir.");
 
 
     }
