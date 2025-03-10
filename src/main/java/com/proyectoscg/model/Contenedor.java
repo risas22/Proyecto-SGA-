@@ -60,8 +60,13 @@ public class Contenedor {
 
     public String mostrarInventario(){
         System.out.println("*** INVENTARIO DEL CONTENEDOR " + codigoContenedor + " ***");
+        if (inventario.isEmpty()) {
+            return "*** ESTE CONTENEDOR NO TIENE INVENTARIO ***\n";
+
+        }
+        String info = "";
         for (Inventario i : inventario) {
-            return String.format(
+            info += String.format(
                     "+-------------------+---------------------------------------+\n" +
                             "| Propiedad        | Valor           \n" +
                             "+-------------------------------+---------------------------+\n" +
@@ -70,7 +75,7 @@ public class Contenedor {
                             "+-------------------------------+---------------------------+\n",
                     i.getHerramienta().getNombre(), i.getCantidad());
         }
-        return "*** ESTE CONTENEDOR NO TIENE INVENTARIO ***\n";
+        return info;
     }
 
 

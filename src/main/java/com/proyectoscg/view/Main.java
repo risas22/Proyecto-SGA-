@@ -71,8 +71,10 @@ public class Main {
     private static void showInventarioContenedor() {
             showContenedor();
             int codigoContenedor = preguntarIndexOffContenedor();
-            Contenedor c = contenedores.get(codigoContenedor);
-            System.out.println(c.mostrarInventario());
+            if (codigoContenedor >= 0){
+                Contenedor c = contenedores.get(codigoContenedor);
+                System.out.println(c.mostrarInventario());
+            }
     }
 
 
