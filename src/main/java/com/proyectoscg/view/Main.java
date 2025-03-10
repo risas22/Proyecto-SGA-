@@ -69,13 +69,10 @@ public class Main {
 
 
     private static void showInventarioContenedor() {
-        if (!isEmptyListContenedores()) {
-            System.out.println("*** LISTA DE CONTENEDORES ***");
             showContenedor();
             int codigoContenedor = preguntarIndexOffContenedor();
             Contenedor c = contenedores.get(codigoContenedor);
             System.out.println(c.mostrarInventario());
-        }
     }
 
 
@@ -113,9 +110,7 @@ public class Main {
                         if (indexContenedor >= 0) {
                             Contenedor c = contenedores.get(indexContenedor);
                             if (c.capacidadRestante() >= cantidadHerramienta) {
-                                c.anadirHerramienta(h, cantidadHerramienta);
-
-
+                                c.anadirHerramienta(h,cantidadHerramienta);
                                 System.out.println("*** SE HAN AÑADIDO CORRECTAMENTE LAS UNIDADES AL CONTENEDOR ***\n");
                             }
                             else{
@@ -153,7 +148,7 @@ public class Main {
         if (!isEmptyListContenedores()) { // Si la lista de contenedores está vacía
             for (Contenedor c : contenedores) {
                 if (c.capacidadRestante() >= cantidadDeHerramientas) {
-                    System.out.println("*** LISTA DE CONTENEDORES DISPONIBLES ***");
+                    System.out.println("*** CONTENEDORES DISPONIBLES ***");
                     System.out.println(c);    // Llama a toString() de cada contenedor
                      disponible = true;
                 }

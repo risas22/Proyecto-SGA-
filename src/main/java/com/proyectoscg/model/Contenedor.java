@@ -41,7 +41,7 @@ public class Contenedor {
 
     public void anadirHerramienta (Herramienta h,int cantidad){       //método para añadir electros a la lista, lo tenemos que llamar aquí para utilizarlo en el main
         Inventario i = new Inventario(h, cantidad);
-        inventario.add(i);                                      // ya que en el main solo existe la lista de casas
+        inventario.add(i);                                      // ya que en el main solo existe la lista de de contenedores y herramientas
     }
 
 
