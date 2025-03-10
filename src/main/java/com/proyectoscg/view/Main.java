@@ -242,11 +242,6 @@ public class Main {
 
     }
 
-
-
-
-
-
     private static void menu() {        //menu output
         System.out.println("*** BIENVENIDO A LA APP DE GESTIÓN DE ALMACENAMIENTO ***\n" +
                 "1. Añadir Herramienta.\n" +
