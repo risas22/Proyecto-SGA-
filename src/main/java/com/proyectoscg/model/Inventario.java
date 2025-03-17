@@ -1,5 +1,12 @@
 package com.proyectoscg.model;
 
+/**
+ * @author KevinColl
+ * @author KristinaLlamas
+ * @author VictorMedina
+ *
+ * */
+
 public class Inventario {
     private Herramienta h;
     private int cantidad;
