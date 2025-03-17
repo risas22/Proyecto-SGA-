@@ -1,5 +1,11 @@
 package com.proyectoscg.model;
 
+/**
+ * @author KevinColl
+ * @author KristinaLlamas
+ * @author VictorMedina
+ *
+ * */
 public class Herramienta {
     private String nombre;
     private String codigoHerramienta;

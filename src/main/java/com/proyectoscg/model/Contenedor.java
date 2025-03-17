@@ -2,6 +2,13 @@ package com.proyectoscg.model;
 
 import java.util.ArrayList;
 
+/**
+ * @author KevinColl
+ * @author KristinaLlamas
+ * @author VictorMedina
+ *
+ * */
+
 public class Contenedor {
     private String codigoContenedor;
     private int capacidadContenedor;
