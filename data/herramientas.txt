@@ -2,3 +2,4 @@ tornillo-123-true
 martillo-1234-false
 Taladro-01-true
 Escalera-02-false
+Martillo-03-true

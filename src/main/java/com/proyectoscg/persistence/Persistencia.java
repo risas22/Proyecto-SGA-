@@ -1,10 +1,9 @@
 package com.proyectoscg.persistence;
-import com.proyectoscg.model.Contenedor;
-import com.proyectoscg.model.Herramienta;
-import com.proyectoscg.model.Inventario;
+import com.proyectoscg.model.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author KevinColl
@@ -64,10 +63,21 @@ public class Persistencia {
      */
     public void writeHerramienta(Herramienta h) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaHerramienta, true));
-        writer.write(h.getNombre() + "-" + h.getCodigoHerramienta() + "-" + h.isSmall());
+
+        // Identificamos si es una HerramientaP o una HerramientaG y escribimos en consecuencia
+        if (h instanceof HerramientaP) {
+            // Para HerramientaP, obtenemos el valor de 'isSmall'
+            writer.write("P-" + h.getNombre() + "-" + h.getCodigoHerramienta() + "-" + ((HerramientaP) h).isSmall());
+        } else if (h instanceof HerramientaG) {
+            // Para HerramientaG, no necesitamos 'isSmall', ya que no existe en esta clase
+            writer.write("G-" + h.getNombre() + "-" + h.getCodigoHerramienta() + "-");
+        }
+
         writer.newLine();
         writer.close();
     }
+
+
 
     /**
      * Escribe un objeto Contenedor en el archivo de contenedores.
@@ -84,19 +94,31 @@ public class Persistencia {
     }
 
     /**
-     * Escribe un objeto Inventario asociado a un Contenedor en el archivo de inventarios.
+     * Escribe en el archivo de inventarios la información sobre las herramientas almacenadas
+     * en un contenedor, recorriendo su inventario.
      * El archivo de inventarios se abre en modo de adición para no sobrescribir los datos existentes.
+     * Por cada herramienta en el inventario, se escribe una línea en el archivo con el formato:
+     * <codigoContenedor>-<codigoHerramienta>-<cantidad>.
      *
-     * @param c El objeto Contenedor al que pertenece el inventario.
-     * @param i El objeto Inventario que se va a escribir en el archivo.
-     * @throws IOException Si ocurre un error al escribir en el archivo.
+     * @param c El objeto Contenedor que contiene el inventario a escribir.
+     * @throws IOException Si ocurre un error al abrir o escribir en el archivo.
      */
-    public void writeInventario(Contenedor c, Inventario i ) throws IOException {
+    public void writeInventario(Contenedor c) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaInventario, true));
-        writer.write(c.getCodigoContenedor() + "-" + i.getHerramienta().getCodigoHerramienta() + "-" + i.getCantidad());
-        writer.newLine();
+
+        // Recorremos el HashMap de inventario
+        for (HashMap.Entry<Herramienta, Integer> entry : c.getInventario().entrySet()) {
+            Herramienta herramienta = entry.getKey();  // Obtiene la herramienta
+            int cantidad = entry.getValue();  // Obtiene la cantidad
+
+            // Escribimos la información en el archivo
+            writer.write(c.getCodigoContenedor() + "-" + herramienta.getCodigoHerramienta() + "-" + cantidad);
+            writer.newLine();
+        }
+
         writer.close();
     }
+
 
     /**
      * Reescribe el archivo de herramientas con los objetos Herramienta proporcionados.
@@ -131,21 +153,41 @@ public class Persistencia {
     /**
      * Lee el archivo de herramientas y devuelve una lista de objetos de tipo Herramienta.
      * Cada línea del archivo contiene los datos de una herramienta, que se desglosan y se usan
-     * para crear instancias de Herramienta.
+     * para crear instancias de HerramientaP o HerramientaG dependiendo del tipo de herramienta.
+     * La información leída se interpreta como el tipo de herramienta, nombre, código de herramienta y si es pequeña o no.
+     * Si la herramienta es de tipo "P", se asigna el valor isSmall en función de la respuesta leída.
      * @return Una lista de objetos Herramienta leídos desde el archivo.
      * @throws IOException Si ocurre un error al leer el archivo.
      */
     public ArrayList<Herramienta> readFicheroHerramienta() throws IOException {
         ArrayList<Herramienta> herramientas = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(rutaHerramienta));
-        String line;   //Variable que lee cada línea del fichero
+        String line;
         while ((line = reader.readLine()) != null) {
-            String[] data = line.split("-");      //Desglosamos los datos de la línea para crear un objeto Casa (lo separamos de la manera dentro del regex)
-            String nombre = data[0];
-            String codigoHerramienta = data[1];
-            boolean isSmall = Boolean.parseBoolean(data[2]);
-            Herramienta newHerramienta = new Herramienta(nombre, codigoHerramienta, isSmall);
-            herramientas.add(newHerramienta);
+            String[] data = line.split("-");
+            String tipo = data[0];  // "P" para HerramientaP, "G" para HerramientaG
+            String nombre = data[1];
+            String codigoHerramienta = data[2];
+            String respuestaSmall = data[3]; // Respuesta S/N para saber si es pequeña
+
+            Herramienta herramienta = null;
+
+            if (tipo.equals("P")) {
+                // Crear HerramientaP
+                herramienta = new HerramientaP(nombre, codigoHerramienta);
+
+                // Asignar isSmall en función de la respuesta del usuario
+                boolean isSmall = respuestaSmall.equalsIgnoreCase("S");
+                ((HerramientaP) herramienta).setSmall(isSmall); // Asignamos el valor de isSmall
+            } else if (tipo.equals("G")) {
+                // Crear HerramientaG sin necesidad de isSmall
+                herramienta = new HerramientaG(nombre, codigoHerramienta);
+            }
+
+            // Solo agregamos si es una herramienta válida (P o G)
+            if (herramienta != null) {
+                herramientas.add(herramienta);
+            }
         }
         reader.close();
         return herramientas;

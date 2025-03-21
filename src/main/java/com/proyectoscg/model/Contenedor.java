@@ -1,6 +1,7 @@
 package com.proyectoscg.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author KevinColl
@@ -12,13 +13,18 @@ import java.util.ArrayList;
 public class Contenedor {
     private String codigoContenedor;
     private int capacidadContenedor;
-    private ArrayList<Inventario> inventario; // Cambié esto a privado para mantener el encapsulamiento
+    private HashMap<Herramienta, Integer> inventario;
 
     public Contenedor(String codigoContenedor, int capacidad) {
         this.codigoContenedor = codigoContenedor;
         this.capacidadContenedor = capacidad;
-        this.inventario = new ArrayList<>();
+        this.inventario = new HashMap<>();
     }
+
+    public HashMap<Herramienta, Integer> getInventario() {
+        return inventario;
+    }
+
 
     public Contenedor(String codigo) {
         this.codigoContenedor = codigo;
@@ -38,18 +44,23 @@ public class Contenedor {
         return capacidadContenedor;
     }
 
-    public int capacidadRestante(){
-        int disponible = capacidadContenedor;
-        for (Inventario i : inventario) {
-            disponible -= i.getCantidad();
+    public int capacidadRestante() {
+        int ocupado = 0;
+        for (Integer cantidad : inventario.values()) {
+            ocupado += cantidad;
         }
-        return disponible;
+        return capacidadContenedor - ocupado;
     }
 
-    public void anadirHerramienta (Herramienta h,int cantidad){       //método para añadir electros a la lista, lo tenemos que llamar aquí para utilizarlo en el main
-        Inventario i = new Inventario(h, cantidad);
-        inventario.add(i);                                      // ya que en el main solo existe la lista de de contenedores y herramientas
+    public void anadirHerramienta(Herramienta h, int cantidad) {
+        if (inventario.containsKey(h)) {
+            int cantidadActual = inventario.get(h);
+            inventario.put(h, cantidadActual + cantidad);
+        } else {
+            inventario.put(h, cantidad);
+        }
     }
+
 
 
     @Override
@@ -65,24 +76,20 @@ public class Contenedor {
                 codigoContenedor, capacidadContenedor, capacidadRestante());
     }
 
-    public String mostrarInventario(){
-        System.out.println("*** INVENTARIO DEL CONTENEDOR " + codigoContenedor + " ***");
+    public String mostrarInventario() {
         if (inventario.isEmpty()) {
             return "*** ESTE CONTENEDOR NO TIENE INVENTARIO ***\n";
-
         }
-        String info = "";
-        for (Inventario i : inventario) {
-            info += String.format(
-                    "+-------------------+---------------------------------------+\n" +
-                            "| Propiedad        | Valor           \n" +
-                            "+-------------------------------+---------------------------+\n" +
-                            "| Herramienta      | %-35s  \n" +
-                            "| Cantidad         | %-35s  \n" +
-                            "+-------------------------------+---------------------------+\n",
-                    i.getHerramienta().getNombre(), i.getCantidad());
-        }
-        return info;
+        StringBuilder info = new StringBuilder();
+        info.append("*** INVENTARIO DEL CONTENEDOR ").append(codigoContenedor).append(" ***\n");
+        info.append("+----------------------+----------+\n");
+        info.append("| Herramienta          | Cantidad |\n");
+        info.append("+----------------------+----------+\n");
+        inventario.forEach((herramienta, cantidad) ->
+                info.append(String.format("| %-20s | %-8d |\n", herramienta.getNombre(), cantidad))
+        );
+        info.append("+----------------------+----------+\n");
+        return info.toString();
     }
 
 
