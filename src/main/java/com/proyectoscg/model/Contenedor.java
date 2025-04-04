@@ -1,16 +1,17 @@
 package com.proyectoscg.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Contenedor {
     private String codigoContenedor;
     private int capacidadContenedor;
-    private ArrayList<Inventario> inventario; // Cambié esto a privado para mantener el encapsulamiento
+    private HashMap<Herramienta,Integer> inventario; // Cambié esto a privado para mantener el encapsulamiento
 
     public Contenedor(String codigoContenedor, int capacidad) {
         this.codigoContenedor = codigoContenedor;
         this.capacidadContenedor = capacidad;
-        this.inventario = new ArrayList<>();
+        this.inventario = new HashMap<>();
     }
 
     public Contenedor(String codigo) {
@@ -31,52 +32,59 @@ public class Contenedor {
         return capacidadContenedor;
     }
 
+
+
     public int capacidadRestante(){
         int disponible = capacidadContenedor;
-        for (Inventario i : inventario) {
-            disponible -= i.getCantidad();
+        for (Herramienta h : inventario.keySet()) {
+            disponible -= inventario.get(h); //
         }
         return disponible;
     }
 
-    public void anadirHerramienta (Herramienta h,int cantidad){       //método para añadir electros a la lista, lo tenemos que llamar aquí para utilizarlo en el main
-        Inventario i = new Inventario(h, cantidad);
-        inventario.add(i);                                      // ya que en el main solo existe la lista de de contenedores y herramientas
+    public void anadirHerramienta (Herramienta h,int cantidad){
+             if (inventario.containsKey(h)){
+                 inventario.put(h, inventario.get(h) + cantidad);
+             }
+             else{
+                 inventario.put(h, cantidad);
+             }
+
     }
 
 
-    @Override
-    public String toString() {
-        return String.format(
-                "+-------------------+---------------------------------------+\n" +
-                        "| Propiedad                     | Valor           \n" +
-                        "+-------------------------------+---------------------------+\n" +
-                        "| Código Contenedor             | %-35s  \n" +
-                        "| Capacidad Máxima de Unidades  | %-35s  \n" +
-                        "| Capacidad Disponible          | %-35s  \n" +
-                        "+-------------------------------+---------------------------+\n",
-                codigoContenedor, capacidadContenedor, capacidadRestante());
-    }
+//    @Override
+//    public String toString() {
+//        return String.format(
+//                "+-------------------+---------------------------------------+\n" +
+//                        "| Propiedad                     | Valor           \n" +
+//                        "+-------------------------------+---------------------------+\n" +
+//                        "| Código Contenedor             | %-35s  \n" +
+//                        "| Capacidad Máxima de Unidades  | %-35s  \n" +
+//                        "| Capacidad Disponible          | %-35s  \n" +
+//                        "+-------------------------------+---------------------------+\n",
+//                codigoContenedor, capacidadContenedor, capacidadRestante());
+//    }
 
-    public String mostrarInventario(){
-        System.out.println("*** INVENTARIO DEL CONTENEDOR " + codigoContenedor + " ***");
-        if (inventario.isEmpty()) {
-            return "*** ESTE CONTENEDOR NO TIENE INVENTARIO ***\n";
-
-        }
-        String info = "";
-        for (Inventario i : inventario) {
-            info += String.format(
-                    "+-------------------+---------------------------------------+\n" +
-                            "| Propiedad        | Valor           \n" +
-                            "+-------------------------------+---------------------------+\n" +
-                            "| Herramienta      | %-35s  \n" +
-                            "| Cantidad         | %-35s  \n" +
-                            "+-------------------------------+---------------------------+\n",
-                    i.getHerramienta().getNombre(), i.getCantidad());
-        }
-        return info;
-    }
+//    public String mostrarInventario(){
+//        System.out.println("*** INVENTARIO DEL CONTENEDOR " + codigoContenedor + " ***");
+//        if (inventario.isEmpty()) {
+//            return "*** ESTE CONTENEDOR NO TIENE INVENTARIO ***\n";
+//
+//        }
+//        String info = "";
+//        for (Herramienta h : inventario.keySet()) {
+//            info += String.format(
+//                    "+-------------------+---------------------------------------+\n" +
+//                            "| Propiedad        | Valor           \n" +
+//                            "+-------------------------------+---------------------------+\n" +
+//                            "| Herramienta      | %-35s  \n" +
+//                            "| Cantidad         | %-35s  \n" +
+//                            "+-------------------------------+---------------------------+\n",
+//                    h.getNombre(), inventario.get(h));
+//        }
+//        return info;
+//    }
 
 
 

@@ -1,12 +1,12 @@
 package com.proyectoscg.model;
 
 public class Herramienta {
-    private String nombre;
+    private String nombreHerramienta;
     private String codigoHerramienta;
     private boolean isSmall;
 
-    public Herramienta(String nombre, String codigoHerramienta, boolean isSmall) {
-        this.nombre = nombre;
+    public Herramienta(String nombreHerramienta, String codigoHerramienta, boolean isSmall) {
+        this.nombreHerramienta = nombreHerramienta;
         this.codigoHerramienta = codigoHerramienta;
         this.isSmall = isSmall;
     }
@@ -22,8 +22,8 @@ public class Herramienta {
     }
 
     //Getters
-    public String getNombre() {
-        return nombre;
+    public String getNombreHerramienta() {
+        return nombreHerramienta;
     }
     public String getCodigoHerramienta() {
         return codigoHerramienta;
@@ -32,17 +32,7 @@ public class Herramienta {
         return isSmall;
     }
 
-
-    @Override
-    public String toString() {
-        return String.format(
-                "+---------------------------+-------------------------------+\n" +
-                        "| Propiedad         | Valor                               |\n" +
-                        "+-------------------+---------------------------------------+\n" +
-                        "| Nombre            | %-35s |\n" +
-                        "| Código Herramienta| %-35s |\n" +
-                        "| Es pequeño        | %-35s |\n" +
-                        "+-------------------+---------------------------------------+\n",
-                nombre, codigoHerramienta, isSmall ? "SI" : "NO");
+    public String[] toArrayHerramientas(){
+        return new String[]{codigoHerramienta,nombreHerramienta,Boolean.toString(isSmall)};
     }
 }
