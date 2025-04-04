@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2301c598-c01f-418b-b551-59ed1ccd7df0" name="Changes" comment="última modificación 2 hecha (arreglando el to string de inventario de la opción 6 y 7)" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;kevinak4747&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/risas22/Proyecto-SGA-.git&quot;,
+    &quot;accountId&quot;: &quot;4ce7eb9a-68c1-46d8-b8cb-ceec09e3aa2d&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2tgLMuVVyh75I4UBb1TLNzmAN7u" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "kevin",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/kevin/OneDrive/Escritorio/Proyectos/Proyectos Java/Proyecto_Zoologico"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.proyectoscg.view.Main" />
+      <module name="ProyectoSCG" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.proyectoscg.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2301c598-c01f-418b-b551-59ed1ccd7df0" name="Changes" comment="" />
+      <created>1740768725368</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740768725368</updated>
+    </task>
+    <task id="LOCAL-00001" summary="prueba1">
+      <option name="closed" value="true" />
+      <created>1740768953155</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740768953155</updated>
+    </task>
+    <task id="LOCAL-00002" summary="editando">
+      <option name="closed" value="true" />
+      <created>1740771097213</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740771097213</updated>
+    </task>
+    <task id="LOCAL-00003" summary="trabajo actualizado hasta 1 de marzo (falta añadir inventario y mostrar inventario)">
+      <option name="closed" value="true" />
+      <created>1740787910161</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740787910161</updated>
+    </task>
+    <task id="LOCAL-00004" summary="pequeña modificación 1 de marzo">
+      <option name="closed" value="true" />
+      <created>1740791510507</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740791510507</updated>
+    </task>
+    <task id="LOCAL-00005" summary="hecho hasta la mitad de añadir inventario(opción3 menú)">
+      <option name="closed" value="true" />
+      <created>1741309268418</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741309268418</updated>
+    </task>
+    <task id="LOCAL-00006" summary="falta por escribir en fichero en el apartado 3 de inventario en el main, en la persistencia falta reescribir el inventario y leerlo y con eso está toda la primera parte (opción3 menú)">
+      <option name="closed" value="true" />
+      <created>1741462156548</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741462156548</updated>
+    </task>
+    <task id="LOCAL-00007" summary="ultima modificación">
+      <option name="closed" value="true" />
+      <created>1741619729058</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1741619729058</updated>
+    </task>
+    <task id="LOCAL-00008" summary="última modificación 2 hecha (arreglando el to string de inventario de la opción 6 y 7)">
+      <option name="closed" value="true" />
+      <created>1741620616044</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741620616044</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="prueba1" />
+    <MESSAGE value="editando" />
+    <MESSAGE value="trabajo actualizado hasta 1 de marzo (falta añadir inventario y mostrar inventario)" />
+    <MESSAGE value="pequeña modificación 1 de marzo" />
+    <MESSAGE value="hecho hasta la mitad de añadir inventario(opción3 menú)" />
+    <MESSAGE value="falta por escribir en fichero en el apartado 3 de inventario en el main, en la persistencia falta reescribir el inventario y leerlo y con eso está toda la primera parte (opción3 menú)" />
+    <MESSAGE value="ultima modificación" />
+    <MESSAGE value="última modificación 2 hecha (arreglando el to string de inventario de la opción 6 y 7)" />
+    <option name="LAST_COMMIT_MESSAGE" value="última modificación 2 hecha (arreglando el to string de inventario de la opción 6 y 7)" />
+  </component>
+</project>
