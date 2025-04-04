@@ -1,23 +1,10 @@
 package com.proyectoscg.view;
-//import com.proyectoscg.excepciones.Excepciones;
-//import com.proyectoscg.model.Contenedor;
 
-import controlador.Controlador;
-
-//import com.proyectoscg.model.Herramienta;
-//
-//import java.io.IOException;
-//import java.util.HashMap;
 public class Main {
 
-//    private static HashMap<String,Herramienta> herramientas;
-//    private static HashMap<String,Contenedor> contenedores;
-//    private static Persistencia archivo ;
     private static JFramePrincipal view;
 
     public static void main(String[] args) {
-//        herramientas = new HashMap<>();
-//        contenedores = new HashMap<>();
         view = new JFramePrincipal();
         view.setVisible(true);
 
