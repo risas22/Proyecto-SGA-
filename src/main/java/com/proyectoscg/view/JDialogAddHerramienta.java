@@ -4,22 +4,20 @@
  */
 package com.proyectoscg.view;
 
-import controlador.Excepciones;
 import com.proyectoscg.model.Herramienta;
-import controlador.Controlador;
+import com.proyectoscg.controlador.Controlador;
+import com.proyectoscg.controlador.Excepciones;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
-
 public class JDialogAddHerramienta extends javax.swing.JDialog {
+
     private Controlador controlador;
-    public JFramePrincipal jFramePrincipal;
-    public HashMap<String,Herramienta>herramientas;
-    
-    
+    private JFramePrincipal jFramePrincipal;
+    private HashMap<String, Herramienta> herramientas;
+
     public JDialogAddHerramienta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -28,19 +26,15 @@ public class JDialogAddHerramienta extends javax.swing.JDialog {
         herramientas = new HashMap<>();
         jButtonAceptarCrearHerramienta.setEnabled(false);
     }
-    
-    public void comprobarjButtonAceptarCrearHerramienta(){
-    if(jTextFieldCodigoHerramienta.getText().length()>8 && jTextFieldNombreHerramienta.getText().length()>1 && jComboBoxBooleanSmall.getSelectedIndex()>0){
-       jButtonAceptarCrearHerramienta.setEnabled(true); 
-    }
-    else{
-        jButtonAceptarCrearHerramienta.setEnabled(false);
-    }
-    }
-    
-    
 
-    
+    public void comprobarjButtonAceptarCrearHerramienta() {
+        if (jTextFieldCodigoHerramienta.getText().length() > 8 && jTextFieldNombreHerramienta.getText().length() > 1 && jComboBoxBooleanSmall.getSelectedIndex() > 0) {
+            jButtonAceptarCrearHerramienta.setEnabled(true);
+        } else {
+            jButtonAceptarCrearHerramienta.setEnabled(false);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,9 +58,9 @@ public class JDialogAddHerramienta extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Sitka Text", 1, 18)); // NOI18N
         jLabel1.setText("***APARTADO DE CREAR HERRAMIENTAS***");
 
-        jLabel2.setText("Código para la nueva herramienta:");
+        jLabel2.setText("Código para la nueva herramienta :");
 
-        jLabel3.setText("Nombre de la nueva herramienta:");
+        jLabel3.setText("Nombre de la nueva herramienta :");
 
         jTextFieldCodigoHerramienta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +123,7 @@ public class JDialogAddHerramienta extends javax.swing.JDialog {
                 .addGap(26, 26, 26))
         );
 
-        jLabel4.setText("Formato Adecuado: AAA-AA-000");
+        jLabel4.setText("Formato Adecuado: AAA-AA-111");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -201,7 +195,7 @@ public class JDialogAddHerramienta extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldCodigoHerramientaActionPerformed
 
     private void jTextFieldCodigoHerramientaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCodigoHerramientaKeyTyped
-        comprobarjButtonAceptarCrearHerramienta(); 
+        comprobarjButtonAceptarCrearHerramienta();
     }//GEN-LAST:event_jTextFieldCodigoHerramientaKeyTyped
 
     private void jTextFieldNombreHerramientaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreHerramientaKeyTyped
@@ -213,45 +207,34 @@ public class JDialogAddHerramienta extends javax.swing.JDialog {
         String codigoHerramienta = (String) jTextFieldCodigoHerramienta.getText();
         String nombreHerramienta = jTextFieldNombreHerramienta.getText();
         String herramientaisSmall = jComboBoxBooleanSmall.getSelectedItem().toString();
-        if (herramientaisSmall.equalsIgnoreCase("herramienta pequeña")){
-             isSmall = (true);
+        if (herramientaisSmall.equalsIgnoreCase("herramienta pequeña")) {
+            isSmall = (true);
+        } else {
+            isSmall = (false);
         }
-        else {
-             isSmall = (false);
-        }
-        if (controlador.comprobarCodigoFormatoHerramienta(codigoHerramienta)){
-            Herramienta newHerramienta = new Herramienta(codigoHerramienta,nombreHerramienta,isSmall);
-            try {
+        try {
+            if (controlador.comprobarCodigoFormatoHerramienta(codigoHerramienta)) {
+                Herramienta newHerramienta = new Herramienta(codigoHerramienta, nombreHerramienta, isSmall);
                 controlador.addHerramientaIfNoExist(codigoHerramienta, newHerramienta);
                 JOptionPane.showMessageDialog(this, "Herramienta creada con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
                 cleanField();
-            } 
-            catch (Excepciones ex) {
-                JOptionPane.showMessageDialog(this, ex.getMensajeError(1), "ERROR", JOptionPane.ERROR_MESSAGE);
-                jTextFieldCodigoHerramienta.requestFocus();
-                jTextFieldCodigoHerramienta.selectAll();
             }
-        }
-        else {
-            JOptionPane.showMessageDialog(this,"ERROR:EL formato no es el adecuado recuerda que tiene que ser  AAA-AA-000" , "ERROR EN FORMATO DEL CÓDIGO",JOptionPane.ERROR_MESSAGE);
+         }
+         catch (Excepciones ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             jTextFieldCodigoHerramienta.requestFocus();
             jTextFieldCodigoHerramienta.selectAll();
         }
-         
+
     }//GEN-LAST:event_jButtonAceptarCrearHerramientaActionPerformed
 
-    private void cleanField(){
+    private void cleanField() {
         jTextFieldCodigoHerramienta.setText("");
         jTextFieldCodigoHerramienta.requestFocus();
         jTextFieldNombreHerramienta.setText("");
         jComboBoxBooleanSmall.setSelectedIndex(0);
-        
-        
     }
-    
-    
-   
-       
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

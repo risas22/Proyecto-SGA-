@@ -4,7 +4,7 @@
  */
 package com.proyectoscg.view;
 
-import controlador.Controlador;
+import com.proyectoscg.controlador.Controlador;
 import javax.swing.JOptionPane;
 
 
@@ -78,6 +78,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jMenu8.add(jMenuAddHerramienta);
 
         jMenuAddContenedor.setText("Crear Contenedor");
+        jMenuAddContenedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAddContenedorActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuAddContenedor);
 
         jMenuAddInventario.setText("Añadir Inventario de Herramientas");
@@ -160,6 +165,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
             jDialogTableHerramientas.setVisible(true);
         }
     }//GEN-LAST:event_jMenuMostrarHerramientasActionPerformed
+
+    private void jMenuAddContenedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAddContenedorActionPerformed
+       JDialogAddContenedor jDialogAddContenedor = new JDialogAddContenedor(this,true);
+       jDialogAddContenedor.setVisible(true); 
+    }//GEN-LAST:event_jMenuAddContenedorActionPerformed
 
  
    

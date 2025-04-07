@@ -1,4 +1,6 @@
-package controlador;
+package com.proyectoscg.controlador;
+
+
 
 public class Excepciones extends  Exception{
     private int codigo;
@@ -6,12 +8,12 @@ public class Excepciones extends  Exception{
 
     public Excepciones(int codigoError) {
         this.codigo = codigoError;
-        this.mensajeError = getMensajeError(codigo);
+        //this.mensajeError = getMensajeError(codigo);
     }
 
   
 
-    public String getMensajeError(int codigoError) {
+    private String getMensajeError(int codigoError) {
         switch(codigoError) {
             case 1:
                 return "ERROR: No pueden haber dos herramientas con el mismo código.";
@@ -36,13 +38,17 @@ public class Excepciones extends  Exception{
                 
             case 8:
                 return "ERROR: El formato de caracteres para el código de la herramienta no es el adecuado";
+                
+            case 9:
+            return "ERROR: El formato de caracteres para el código del contenedor no es el adecuado";
 
             default:
                 return"Error desconocido.";
         }
 
     }
+    @Override
     public String getMessage() {
-        return mensajeError;
+        return getMensajeError(codigo);
     }
 }

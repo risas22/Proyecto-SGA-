@@ -2,12 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controlador;
+package com.proyectoscg.controlador;
 
 import com.proyectoscg.model.Contenedor;
 import com.proyectoscg.model.Herramienta;
 import java.util.HashMap;
 
+/**
+ *
+ * @author kevin
+ */
 public class Controlador {
 
     private HashMap<String, Herramienta> herramientas;
@@ -26,18 +30,18 @@ public class Controlador {
         return controlador;
     }
 
-    public boolean comprobarCodigoFormatoHerramienta(String codigoHerramienta) {
+    public boolean comprobarCodigoFormatoHerramienta(String codigoHerramienta) throws Excepciones {
         if (codigoHerramienta == null || !codigoHerramienta.matches("^[A-Z]{3}-[A-Z]{2}-[0-9]{3}$")) {
-            return false;
+            throw new Excepciones(8);
         }
         return codigoHerramienta.matches("^[A-Z]{3}-[A-Z]{2}-[0-9]{3}$");
     }
 
     public boolean comprobarCodigoFormatoContenedor(String codigoContenedor) throws Excepciones {
-        if (codigoContenedor == null || !codigoContenedor.matches("^[A-Z]{3}-[A-Z]{1}[1-20]{1}-[0-9]{3}$")) {
-            throw new Excepciones(8);
+        if (codigoContenedor == null || !codigoContenedor.matches("^[A-Z]{3}-[A-Z]{1}[0-9]{1}-[0-9]{3}$")) {
+            throw new Excepciones(9);
         }
-        return codigoContenedor.matches("^[A-Z]{3}-[A-Z]{1}[1-20]{1}-[0-9]{3}$");
+        return codigoContenedor.matches("^[A-Z]{3}-[A-Z]{1}[0-9]{1}-[0-9]{3}$");
     }
 
     public void addHerramientaIfNoExist(String codigoHerramienta, Herramienta h) throws Excepciones {
