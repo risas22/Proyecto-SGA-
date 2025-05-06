@@ -7,23 +7,21 @@ package com.proyectoscg.view;
 import com.proyectoscg.model.Herramienta;
 import com.proyectoscg.controlador.Controlador;
 import com.proyectoscg.controlador.Excepciones;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class JDialogAddHerramienta extends javax.swing.JDialog {
-
     private Controlador controlador;
     private JFramePrincipal jFramePrincipal;
-    private HashMap<String, Herramienta> herramientas;
 
     public JDialogAddHerramienta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jFramePrincipal = (JFramePrincipal) parent;
         controlador = Controlador.getInstance();
-        herramientas = new HashMap<>();
         jButtonAceptarCrearHerramienta.setEnabled(false);
     }
 
@@ -182,25 +180,9 @@ public class JDialogAddHerramienta extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBoxBooleanSmallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBooleanSmallActionPerformed
-        comprobarjButtonAceptarCrearHerramienta();
-    }//GEN-LAST:event_jComboBoxBooleanSmallActionPerformed
-
     private void jButtonCancelarCrearHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCrearHerramientaActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarCrearHerramientaActionPerformed
-
-    private void jTextFieldCodigoHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoHerramientaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldCodigoHerramientaActionPerformed
-
-    private void jTextFieldCodigoHerramientaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCodigoHerramientaKeyTyped
-        comprobarjButtonAceptarCrearHerramienta();
-    }//GEN-LAST:event_jTextFieldCodigoHerramientaKeyTyped
-
-    private void jTextFieldNombreHerramientaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreHerramientaKeyTyped
-        comprobarjButtonAceptarCrearHerramienta();
-    }//GEN-LAST:event_jTextFieldNombreHerramientaKeyTyped
 
     private void jButtonAceptarCrearHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarCrearHerramientaActionPerformed
         boolean isSmall;
@@ -213,20 +195,45 @@ public class JDialogAddHerramienta extends javax.swing.JDialog {
             isSmall = (false);
         }
         try {
-            if (controlador.comprobarCodigoFormatoHerramienta(codigoHerramienta)) {
-                Herramienta newHerramienta = new Herramienta(codigoHerramienta, nombreHerramienta, isSmall);
-                controlador.addHerramientaIfNoExist(codigoHerramienta, newHerramienta);
+             if (controlador.comprobarCodigoFormatoHerramienta(codigoHerramienta)){
+                Herramienta newHerramienta = new Herramienta(nombreHerramienta,codigoHerramienta,isSmall);
+                controlador.addHerramienta(newHerramienta);
                 JOptionPane.showMessageDialog(this, "Herramienta creada con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
                 cleanField();
             }
-         }
-         catch (Excepciones ex) {
+            
+        } 
+        
+        catch (Excepciones ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             jTextFieldCodigoHerramienta.requestFocus();
             jTextFieldCodigoHerramienta.selectAll();
         }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+            
+        
+        
+
 
     }//GEN-LAST:event_jButtonAceptarCrearHerramientaActionPerformed
+
+    private void jComboBoxBooleanSmallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBooleanSmallActionPerformed
+        comprobarjButtonAceptarCrearHerramienta();
+    }//GEN-LAST:event_jComboBoxBooleanSmallActionPerformed
+
+    private void jTextFieldNombreHerramientaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreHerramientaKeyTyped
+        comprobarjButtonAceptarCrearHerramienta();
+    }//GEN-LAST:event_jTextFieldNombreHerramientaKeyTyped
+
+    private void jTextFieldCodigoHerramientaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCodigoHerramientaKeyTyped
+        comprobarjButtonAceptarCrearHerramienta();
+    }//GEN-LAST:event_jTextFieldCodigoHerramientaKeyTyped
+
+    private void jTextFieldCodigoHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoHerramientaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCodigoHerramientaActionPerformed
 
     private void cleanField() {
         jTextFieldCodigoHerramienta.setText("");

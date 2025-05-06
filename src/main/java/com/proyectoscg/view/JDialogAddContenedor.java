@@ -8,6 +8,7 @@ import com.proyectoscg.controlador.Controlador;
 import com.proyectoscg.controlador.Excepciones;
 import com.proyectoscg.model.Contenedor;
 import com.proyectoscg.model.Herramienta;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -167,25 +168,25 @@ public class JDialogAddContenedor extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAceptarCrearContenedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarCrearContenedorActionPerformed
-//        try {
-//            String codigoContenedor = (String) jTextFieldCodigoContenedor.getText();
-//            int capacidadContenedor = (int) jSpinnerCapacidadContenedor.getValue();
-//
-//            if (controlador.comprobarCodigoFormatoContenedor(codigoContenedor)) {
-//                Contenedor newContenedor = new Contenedor(codigoContenedor, capacidadContenedor);
-//                controlador.addHerramientaIfNoExist(codigoContenedor, newContenedor);
-//                JOptionPane.showMessageDialog(this, "Herramienta creada con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
-//                cleanField();
-//            } else {
-//                JOptionPane.showMessageDialog(this, "ERROR:EL formato no es el adecuado recuerda que tiene que ser  AAA-AA-000", "ERROR EN FORMATO DEL CÓDIGO", JOptionPane.ERROR_MESSAGE);
-//                jTextFieldCodigoContenedor.requestFocus();
-//                jTextFieldCodigoContenedor.selectAll();
-//            }
-//        } catch (Excepciones ex) {
-//            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-//            jTextFieldCodigoContenedor.requestFocus();
-//            jTextFieldCodigoContenedor.selectAll();
-//        }
+        String codigoContenedor = (String) jTextFieldCodigoContenedor.getText().trim();
+        int capacidadContenedor = (int) jSpinnerCapacidadContenedor.getValue();
+        try {
+            if (controlador.comprobarCodigoFormatoContenedor(codigoContenedor)){
+                Contenedor newContenedor = new Contenedor(codigoContenedor, capacidadContenedor);
+                controlador.addContenedor(newContenedor);
+                JOptionPane.showMessageDialog(this, "Contenedor creado con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                cleanField();
+            }
+
+        } 
+        catch (Excepciones ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            jTextFieldCodigoContenedor.requestFocus();
+            jTextFieldCodigoContenedor.selectAll();        
+        } 
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }//GEN-LAST:event_jButtonAceptarCrearContenedorActionPerformed
 
@@ -202,6 +203,11 @@ public class JDialogAddContenedor extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldCodigoContenedorKeyTyped
 
 
+    private void cleanField(){
+        jTextFieldCodigoContenedor.setText("");
+        jTextFieldCodigoContenedor.requestFocus();
+        jSpinnerCapacidadContenedor.setValue(10);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptarCrearContenedor;
     private javax.swing.JButton jButtonCancelarCrearContenedor;

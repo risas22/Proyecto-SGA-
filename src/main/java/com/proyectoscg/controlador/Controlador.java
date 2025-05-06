@@ -6,7 +6,11 @@ package com.proyectoscg.controlador;
 
 import com.proyectoscg.model.Contenedor;
 import com.proyectoscg.model.Herramienta;
+import com.proyectoscg.persistencia.LaHerratecaDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -14,13 +18,12 @@ import java.util.HashMap;
  */
 public class Controlador {
 
-    private HashMap<String, Herramienta> herramientas;
-    private HashMap<String, Contenedor> contenedores;
+   
     private static Controlador controlador;
+    private LaHerratecaDAO dao;
 
     private Controlador() {
-        herramientas = new HashMap<>();
-        contenedores = new HashMap<>();
+        dao = new LaHerratecaDAO();
     }
 
     public static Controlador getInstance() {
@@ -43,26 +46,30 @@ public class Controlador {
         }
         return codigoContenedor.matches("^[A-Z]{3}-[A-Z]{1}[0-9]{1}-[0-9]{3}$");
     }
-
-    public void addHerramientaIfNoExist(String codigoHerramienta, Herramienta h) throws Excepciones {
-        if (herramientas.containsKey(codigoHerramienta.toUpperCase())) {
+    
+    public void addHerramienta(Herramienta h) throws  Excepciones, SQLException {
+        if (dao.existHerramienta(h)) {
             throw new Excepciones(1);
-        } else {
-            herramientas.put(codigoHerramienta.toUpperCase(), h);
         }
+        dao.insertHerramienta(h);
     }
     
-    public boolean isEmptyHerramientas(){
-       return (herramientas.isEmpty());
+    public void addContenedor(Contenedor c) throws  Excepciones, SQLException {
+        if (dao.existContenedor(c)) {
+            throw new Excepciones(2);
+        }
+        dao.insertContenedor(c);
     }
     
-    public boolean isEmptyContenedores(){
-       return (contenedores.isEmpty());
+    public List<Herramienta> getAllHerramientas() throws SQLException {
+        return dao.selectAllHerramientas();
     }
-
-    public HashMap<String, Herramienta> getHerramientas() {
-        return herramientas;
+    
+     public List<Contenedor> getAllContenedores() throws SQLException {
+        return dao.selectAllContenedores();
     }
+    
+    
         
     
 

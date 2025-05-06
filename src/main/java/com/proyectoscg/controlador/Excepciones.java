@@ -1,14 +1,11 @@
 package com.proyectoscg.controlador;
 
 
-
 public class Excepciones extends  Exception{
     private int codigo;
-    private String mensajeError;
 
     public Excepciones(int codigoError) {
         this.codigo = codigoError;
-        //this.mensajeError = getMensajeError(codigo);
     }
 
   

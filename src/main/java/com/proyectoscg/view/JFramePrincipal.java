@@ -5,6 +5,9 @@
 package com.proyectoscg.view;
 
 import com.proyectoscg.controlador.Controlador;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -68,6 +71,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jLabel2.setText("Seleccione una opción del menú de la barra superior");
 
         jMenu8.setText("Menú Principal");
+        jMenu8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu8ActionPerformed(evt);
+            }
+        });
 
         jMenuAddHerramienta.setText("Crear Herramienta");
         jMenuAddHerramienta.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +94,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jMenu8.add(jMenuAddContenedor);
 
         jMenuAddInventario.setText("Añadir Inventario de Herramientas");
+        jMenuAddInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAddInventarioActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuAddInventario);
 
         jMenuBar3.add(jMenu8);
@@ -155,14 +168,18 @@ public class JFramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuMostrarContenedoresActionPerformed
 
     private void jMenuMostrarHerramientasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMostrarHerramientasActionPerformed
-        JDialogTableHerramientas jDialogTableHerramientas = new JDialogTableHerramientas(this,false);
-        
-        if (controlador.isEmptyHerramientas()){
-            JOptionPane.showMessageDialog(this,"No hay herramientas creadas actualmente","ERROR: TABLA VACÍA", JOptionPane.INFORMATION_MESSAGE);
-            jDialogTableHerramientas.setVisible(false);
-        }
-        else{
-            jDialogTableHerramientas.setVisible(true);
+        try {
+            JDialogTableHerramientas jDialogTableHerramientas = new JDialogTableHerramientas(this,false);
+            
+            if (controlador.getAllHerramientas().isEmpty()){
+                JOptionPane.showMessageDialog(this,"No hay herramientas creadas actualmente","ERROR: TABLA VACÍA", JOptionPane.INFORMATION_MESSAGE);
+                jDialogTableHerramientas.setVisible(false);
+            }
+            else{
+                jDialogTableHerramientas.setVisible(true);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_jMenuMostrarHerramientasActionPerformed
 
@@ -170,6 +187,15 @@ public class JFramePrincipal extends javax.swing.JFrame {
        JDialogAddContenedor jDialogAddContenedor = new JDialogAddContenedor(this,true);
        jDialogAddContenedor.setVisible(true); 
     }//GEN-LAST:event_jMenuAddContenedorActionPerformed
+
+    private void jMenu8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu8ActionPerformed
+
+    private void jMenuAddInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAddInventarioActionPerformed
+       JDialogAddInventario jDialogAddInventario = new JDialogAddInventario(this,true);
+       jDialogAddInventario.setVisible(true); 
+           }//GEN-LAST:event_jMenuAddInventarioActionPerformed
 
  
    

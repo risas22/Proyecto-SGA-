@@ -46,6 +46,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Men&#xfa; Principal"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu8ActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuAddHerramienta">
               <Properties>
@@ -67,6 +70,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir Inventario de Herramientas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuAddInventarioActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

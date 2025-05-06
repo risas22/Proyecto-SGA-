@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.proyectoscg.view;
-
 import com.proyectoscg.model.Herramienta;
 import com.proyectoscg.controlador.Controlador;
-import java.util.HashMap;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,17 +18,19 @@ import javax.swing.table.DefaultTableModel;
 public class JDialogTableHerramientas extends javax.swing.JDialog {
 
     private Controlador controlador;
-    private HashMap<String, Herramienta> herramientas;
 
-    public JDialogTableHerramientas(java.awt.Frame parent, boolean modal) {
+    public JDialogTableHerramientas(java.awt.Frame parent, boolean modal)  {
         super(parent, modal);
-        controlador = Controlador.getInstance();
-        herramientas = new HashMap<>();
-        initComponents();
-        updateTable();
+        try {
+            controlador = Controlador.getInstance();
+            initComponents();
+            updateTable();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
-    public void updateTable() {
+    public void updateTable() throws SQLException {
         DefaultTableModel tablaHerramienta = (DefaultTableModel) jTableHerramientas.getModel();
         tablaHerramienta.setColumnIdentifiers(new String[]{"Código", "Nombre", "Pequeña"});
           jTableHerramientas.setModel(tablaHerramienta);
@@ -34,12 +38,14 @@ public class JDialogTableHerramientas extends javax.swing.JDialog {
           jTableHerramientas.getColumnModel().getColumn(1).setPreferredWidth(130);
           jTableHerramientas.getColumnModel().getColumn(2).setPreferredWidth(20);
           
-        herramientas = controlador.getHerramientas();
-        for (Herramienta h : herramientas.values()) {
+        List<Herramienta> herramientas = controlador.getAllHerramientas();
+        for (Herramienta h : herramientas) {
             tablaHerramienta.addRow(h.toArrayHerramientas());
         }
         
     }
+    
+    
         @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

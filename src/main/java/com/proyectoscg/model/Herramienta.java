@@ -33,6 +33,12 @@ public class Herramienta {
     }
 
     public String[] toArrayHerramientas(){
-        return new String[]{codigoHerramienta,nombreHerramienta,Boolean.toString(isSmall)};
+        String peque = "";
+        if (isSmall) {
+            peque = "SI";
+        } else {
+            peque = "NO";
+        }
+        return new String[]{codigoHerramienta,nombreHerramienta,peque};
     }
 }

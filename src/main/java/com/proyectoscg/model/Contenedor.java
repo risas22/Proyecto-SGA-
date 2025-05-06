@@ -53,40 +53,5 @@ public class Contenedor {
     }
 
 
-//    @Override
-//    public String toString() {
-//        return String.format(
-//                "+-------------------+---------------------------------------+\n" +
-//                        "| Propiedad                     | Valor           \n" +
-//                        "+-------------------------------+---------------------------+\n" +
-//                        "| Código Contenedor             | %-35s  \n" +
-//                        "| Capacidad Máxima de Unidades  | %-35s  \n" +
-//                        "| Capacidad Disponible          | %-35s  \n" +
-//                        "+-------------------------------+---------------------------+\n",
-//                codigoContenedor, capacidadContenedor, capacidadRestante());
-//    }
-
-//    public String mostrarInventario(){
-//        System.out.println("*** INVENTARIO DEL CONTENEDOR " + codigoContenedor + " ***");
-//        if (inventario.isEmpty()) {
-//            return "*** ESTE CONTENEDOR NO TIENE INVENTARIO ***\n";
-//
-//        }
-//        String info = "";
-//        for (Herramienta h : inventario.keySet()) {
-//            info += String.format(
-//                    "+-------------------+---------------------------------------+\n" +
-//                            "| Propiedad        | Valor           \n" +
-//                            "+-------------------------------+---------------------------+\n" +
-//                            "| Herramienta      | %-35s  \n" +
-//                            "| Cantidad         | %-35s  \n" +
-//                            "+-------------------------------+---------------------------+\n",
-//                    h.getNombre(), inventario.get(h));
-//        }
-//        return info;
-//    }
-
-
-
 }
 
