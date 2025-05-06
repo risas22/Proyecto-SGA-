@@ -1,0 +1,26 @@
+Index: Proyecto-SGA-/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>com\\proyectoscg\\view\\JDialogAddHerramienta$4.class\r\ncom\\proyectoscg\\view\\JDialogAddHerramienta.class\r\ncom\\proyectoscg\\view\\JDialogTableHerramientas.class\r\ncom\\proyectoscg\\view\\JDialogAddHerramienta$5.class\r\ncom\\proyectoscg\\model\\Contenedor.class\r\ncom\\proyectoscg\\view\\JDialogAddHerramienta$3.class\r\ncom\\proyectoscg\\view\\Main.class\r\ncom\\proyectoscg\\view\\JDialogAddHerramienta$6.class\r\ncontrolador\\Excepciones.class\r\ncom\\proyectoscg\\view\\JFramePrincipal$1.class\r\ncom\\proyectoscg\\model\\Herramienta.class\r\ncom\\proyectoscg\\view\\JDialogAddHerramienta$2.class\r\ncom\\proyectoscg\\view\\JDialogAddHerramienta$1.class\r\ncom\\proyectoscg\\view\\JFramePrincipal$2.class\r\ncom\\proyectoscg\\view\\JFramePrincipal.class\r\ncom\\proyectoscg\\view\\JFramePrincipal$3.class\r\ncontrolador\\Controlador.class\r\n
+===================================================================
+diff --git a/Proyecto-SGA-/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst b/Proyecto-SGA-/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+--- a/Proyecto-SGA-/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst	(revision 097151b27f1c736d88a1332946e49ddaa741f55e)
++++ b/Proyecto-SGA-/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst	(date 1743800653547)
+@@ -1,17 +1,0 @@
+-com\proyectoscg\view\JDialogAddHerramienta$4.class
+-com\proyectoscg\view\JDialogAddHerramienta.class
+-com\proyectoscg\view\JDialogTableHerramientas.class
+-com\proyectoscg\view\JDialogAddHerramienta$5.class
+-com\proyectoscg\model\Contenedor.class
+-com\proyectoscg\view\JDialogAddHerramienta$3.class
+-com\proyectoscg\view\Main.class
+-com\proyectoscg\view\JDialogAddHerramienta$6.class
+-controlador\Excepciones.class
+-com\proyectoscg\view\JFramePrincipal$1.class
+-com\proyectoscg\model\Herramienta.class
+-com\proyectoscg\view\JDialogAddHerramienta$2.class
+-com\proyectoscg\view\JDialogAddHerramienta$1.class
+-com\proyectoscg\view\JFramePrincipal$2.class
+-com\proyectoscg\view\JFramePrincipal.class
+-com\proyectoscg\view\JFramePrincipal$3.class
+-controlador\Controlador.class
