@@ -11,7 +11,6 @@ public class Contenedor {
     public Contenedor(String codigoContenedor, int capacidad) {
         this.codigoContenedor = codigoContenedor;
         this.capacidadContenedor = capacidad;
-        this.inventario = new HashMap<>();
     }
 
     public Contenedor(String codigo) {
@@ -31,26 +30,15 @@ public class Contenedor {
     public int getCapacidadContenedor() {
         return capacidadContenedor;
     }
-
-
-
-    public int capacidadRestante(){
-        int disponible = capacidadContenedor;
-        for (Herramienta h : inventario.keySet()) {
-            disponible -= inventario.get(h); //
-        }
-        return disponible;
+    
+     public String[] toArrayContenedores() {
+        return new String[] {codigoContenedor, String.valueOf(capacidadContenedor)};
     }
 
-    public void anadirHerramienta (Herramienta h,int cantidad){
-             if (inventario.containsKey(h)){
-                 inventario.put(h, inventario.get(h) + cantidad);
-             }
-             else{
-                 inventario.put(h, cantidad);
-             }
 
-    }
+
+
+
 
 
 }
