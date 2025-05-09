@@ -15,10 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author kevin
- */
+
 public class LaHerratecaDAO {
      public void insertHerramienta(Herramienta h) throws SQLException {
         Connection c = conectar();
@@ -55,13 +52,42 @@ public class LaHerratecaDAO {
     public boolean existContenedor(Contenedor c) throws SQLException {
         Connection cn = conectar();
         Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery("select * from contenedor where codigocontenedor = '" + c.getCodigoContenedor() +"';");
+        ResultSet rs = st.executeQuery("select * from contenedor where codigocontenedor = '" + c.getCodigoContenedor() + "';");
         boolean existe = rs.next();
         rs.close();
         st.close();
         desconectar(cn);
         return existe;
     }
+    
+    public void insertInventario(Herramienta h,Contenedor c, int unidadesAdd) throws SQLException {
+        Connection cn = conectar();
+        PreparedStatement ps = cn.prepareStatement("insert into inventario values (?, ?, ?);");
+        ps.setString(1,h.getCodigoHerramienta());
+        ps.setString(2,c.getCodigoContenedor());
+        ps.setInt(3, unidadesAdd);
+        ps.executeUpdate();
+        ps.close();
+        desconectar(cn);
+    }
+    
+    public void updateInventario(Herramienta h,Contenedor c, int unidadesAdd){
+        
+    }
+    
+    public int sumaUnidadesContenedor(Contenedor c) throws SQLException{
+        Connection cn = conectar();
+        Statement st = cn.createStatement();
+        int sumaUnidadesTotal = 0;
+        ResultSet rs = st.executeQuery("select SUM(cantidaddeherramientas) as sumaTotal from inventario where codigocontenedor = '" + c.getCodigoContenedor() + "';");
+        if (rs.next()) {
+            sumaUnidadesTotal = rs.getInt("sumaTotal");
+        }
+        rs.close();
+        st.close();
+        desconectar(cn);
+        return sumaUnidadesTotal;
+        }
     
     public List<Herramienta> selectAllHerramientas() throws SQLException {
         List<Herramienta> herramientas = new ArrayList<>();

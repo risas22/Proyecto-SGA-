@@ -61,6 +61,27 @@ public class Controlador {
         dao.insertContenedor(c);
     }
     
+    public void addInventario(Herramienta h , Contenedor c, int unidadesAdd) throws SQLException{
+//        if (dao.existHerramienta(h)){  //aquí deberíamos hacer un update porque no se puede repetir el mismo código dentro del inventario
+//            dao.updateInventario(h , c , unidadesAdd);
+//        }
+//        if{
+            dao.insertInventario(h , c , unidadesAdd);
+//        }
+        
+    }
+    
+    public boolean isCabenUnidades (Contenedor c , int unidadesAdd) throws SQLException, Excepciones{
+        if (dao.sumaUnidadesContenedor(c) + unidadesAdd > c.getCapacidadContenedor()){
+            throw new Excepciones(5);     
+        }
+        return true;
+    }
+    
+//    public int capacidadDisponible (Contenedor c) throws SQLException{
+//        return (c.getCapacidadContenedor() - dao.sumaUnidadesContenedor(c) );
+//    } 
+//    
     public List<Herramienta> getAllHerramientas() throws SQLException {
         return dao.selectAllHerramientas();
     }

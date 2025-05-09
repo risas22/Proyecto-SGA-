@@ -5,6 +5,7 @@
 package com.proyectoscg.view;
 
 import com.proyectoscg.controlador.Controlador;
+import com.proyectoscg.controlador.Excepciones;
 import com.proyectoscg.model.Contenedor;
 import com.proyectoscg.model.Herramienta;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +25,7 @@ public class JDialogAddInventario extends javax.swing.JDialog {
     private Controlador controlador;
 
     public JDialogAddInventario(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, false);
         try {
             initComponents();
             controlador = Controlador.getInstance();
@@ -184,30 +186,36 @@ public class JDialogAddInventario extends javax.swing.JDialog {
 
     private void jButtonAceptarAddHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarAddHerramientaActionPerformed
 
-       String codigoHerramienta = jComboBoxMostrarHerramientas.getSelectedItem().toString();
-       int unidadesAdd = (int) jSpinnerUnidadesAdd.getValue();
-       String codigoContenedor = jComboBoxMostrarContenedores.getSelectedItem().toString();   
-//       Contenedor newInventario = new Herramienta(nombreHerramienta,codigoHerramienta,isSmall);
-//        System.out.println("prueba");
-//        controlador.addHerramienta(newHerramienta);
-//        System.out.println("prueba2");
-//        JOptionPane.showMessageDialog(this, "Herramienta creada con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
-////                cleanField();
-////            }
-//
-//        }
-//
-//        catch (Excepciones ex) {
-//            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-//            jTextFieldCodigoHerramienta.requestFocus();
-//            jTextFieldCodigoHerramienta.selectAll();
-//        }
-//        catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
+        try {
+            int indexHerramienta = jComboBoxMostrarHerramientas.getSelectedIndex()-1;
+            Herramienta herramientaSeleccionada = herramientas.get(indexHerramienta);
+            int unidadesAdd = (int) jSpinnerUnidadesAdd.getValue();
+            int indexContenedor = jComboBoxMostrarContenedores.getSelectedIndex()-1;
+            Contenedor contenedorSeleccionado = contenedores.get(indexContenedor);
+            if (controlador.isCabenUnidades(contenedorSeleccionado , unidadesAdd)){
+                controlador.addInventario(herramientaSeleccionada, contenedorSeleccionado,unidadesAdd);
+                JOptionPane.showMessageDialog(this, "Inventario añadido con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                cleanField();
+            }
+
+        }
+
+        catch (Excepciones ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage() , "ERROR", JOptionPane.ERROR_MESSAGE);
+           }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        
+        }
 
     }//GEN-LAST:event_jButtonAceptarAddHerramientaActionPerformed
 
+    private void cleanField() {
+        jSpinnerUnidadesAdd.setValue(1);
+        jComboBoxMostrarHerramientas.setSelectedIndex(0);
+        jComboBoxMostrarContenedores.setSelectedIndex(0);
+    }
+    
     private void jButtonCancelarCrearHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCrearHerramientaActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarCrearHerramientaActionPerformed
