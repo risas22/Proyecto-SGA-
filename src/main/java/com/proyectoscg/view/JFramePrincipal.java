@@ -164,7 +164,20 @@ public class JFramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuAddHerramientaActionPerformed
 
     private void jMenuMostrarContenedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMostrarContenedoresActionPerformed
-
+             try {
+            JDialogTableContenedores jDialogTableContenedores = new JDialogTableContenedores(this,false);
+            
+            if (controlador.getAllContenedores().isEmpty()){
+                JOptionPane.showMessageDialog(this,"No hay contenedores creados actualmente","ERROR: TABLA VACÍA", JOptionPane.INFORMATION_MESSAGE);
+                jDialogTableContenedores.setVisible(false);
+            }
+            else{
+                jDialogTableContenedores.setVisible(true);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+              
     }//GEN-LAST:event_jMenuMostrarContenedoresActionPerformed
 
     private void jMenuMostrarHerramientasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMostrarHerramientasActionPerformed

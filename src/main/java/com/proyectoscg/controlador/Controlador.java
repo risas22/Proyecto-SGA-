@@ -62,12 +62,12 @@ public class Controlador {
     }
     
     public void addInventario(Herramienta h , Contenedor c, int unidadesAdd) throws SQLException{
-//        if (dao.existHerramienta(h)){  //aquí deberíamos hacer un update porque no se puede repetir el mismo código dentro del inventario
-//            dao.updateInventario(h , c , unidadesAdd);
-//        }
-//        if{
+        if (dao.existHerramienta(h)){  //aquí deberíamos hacer un update porque no se puede repetir el mismo código dentro del inventario
+            dao.updateInventario(h , c , unidadesAdd);
+        }
+        else{
             dao.insertInventario(h , c , unidadesAdd);
-//        }
+        }
         
     }
     
