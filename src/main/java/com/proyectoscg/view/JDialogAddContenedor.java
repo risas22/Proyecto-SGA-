@@ -22,14 +22,12 @@ public class JDialogAddContenedor extends javax.swing.JDialog {
 
     private Controlador controlador;
     private JFramePrincipal jFramePrincipal;
-    private HashMap<String, Contenedor> contenedores;
 
     public JDialogAddContenedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jFramePrincipal = (JFramePrincipal) parent;
         controlador = Controlador.getInstance();
-        contenedores = new HashMap<>();
         jButtonAceptarCrearContenedor.setEnabled(false);
     }
 
