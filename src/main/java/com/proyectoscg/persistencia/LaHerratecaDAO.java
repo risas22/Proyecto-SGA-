@@ -17,7 +17,7 @@ import java.util.List;
 
 
 public class LaHerratecaDAO {
-     public void insertHerramienta(Herramienta h) throws SQLException {
+    public void insertHerramienta(Herramienta h) throws SQLException {
         Connection c = conectar();
         PreparedStatement ps = c.prepareStatement("insert into herramienta values (?, ?, ?);");
         ps.setString(1, h.getNombreHerramienta());
@@ -71,9 +71,25 @@ public class LaHerratecaDAO {
         desconectar(cn);
     }
     
-    public void updateInventario(Herramienta h,Contenedor c, int unidadesAdd){
-        
+    public void updateInventario(Herramienta h,Contenedor c, int unidadesAdd) throws SQLException{
+        Connection cn = conectar();
+        Statement st = cn.createStatement();
+        st.executeUpdate("update inventario set cantidaddeherramientas = cantidaddeherramientas + " + unidadesAdd + " where codigocontenedor = '" + c.getCodigoContenedor() + "' and codigoherramienta = '" + h.getCodigoHerramienta() + "' ;");
+        st.close();
+        desconectar(cn);
     }
+    
+    public boolean comprobarHerramientaContenedor(Herramienta h , Contenedor c) throws SQLException{
+        Connection cn = conectar();
+        Statement st = cn.createStatement();
+        ResultSet rs = st.executeQuery("select * from inventario where codigocontenedor = '" + c.getCodigoContenedor() + "' and codigoherramienta = '" + h.getCodigoHerramienta() + "';");
+        boolean existe = rs.next();
+        rs.close();
+        st.close();
+        desconectar(cn);
+        return existe;
+    } 
+    
     
     public int sumaUnidadesContenedor(Contenedor c) throws SQLException{
         Connection cn = conectar();
@@ -88,6 +104,8 @@ public class LaHerratecaDAO {
         desconectar(cn);
         return sumaUnidadesTotal;
         }
+    
+   
     
     public List<Herramienta> selectAllHerramientas() throws SQLException {
         List<Herramienta> herramientas = new ArrayList<>();
@@ -123,6 +141,109 @@ public class LaHerratecaDAO {
         desconectar(cj);
         return contenedores;
     }
+    
+    public List<Herramienta> selectAllHerramientasSmall() throws SQLException {
+        List<Herramienta> herramientas = new ArrayList<>();
+        Connection cj = conectar();
+        Statement st = cj.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM herramienta;");
+
+        while (rs.next()) {
+            String nombreHerramienta = rs.getString("nombreherramienta");
+            String codigoHerramienta = rs.getString("codigoherramienta");
+            boolean isSmall = rs.getBoolean("issmall");
+
+            Herramienta nueva = new Herramienta(nombreHerramienta, codigoHerramienta, isSmall);
+
+            if (isSmall) {
+                PreparedStatement ps = cj.prepareStatement(
+                    "SELECT c.* FROM inventario i JOIN contenedor c ON i.codigocontenedor = c.codigocontenedor WHERE i.codigoherramienta = ?"
+                );
+                ps.setString(1, codigoHerramienta);
+                ResultSet rsCont = ps.executeQuery();
+
+                while (rsCont.next()) {
+                    String codCont = rsCont.getString("codigocontenedor");
+                    int capacidad = rsCont.getInt("capacidadcontenedor");
+                    Contenedor c = new Contenedor(codCont, capacidad);
+                    nueva.addContenedor(c);
+                }
+
+                rsCont.close();
+                ps.close();
+            }
+
+            herramientas.add(nueva);
+        }
+
+        rs.close();
+        st.close();
+        desconectar(cj);
+        return herramientas;
+    }
+    
+    public List<Herramienta> obtenerPorContenedor(Contenedor contenedor) throws SQLException {
+        List<Herramienta> herramientas = new ArrayList<>();
+        Connection cj = conectar();
+        String sql = "SELECT h.codigoherramienta, h.nombreherramienta, i.cantidaddeherramientas " +
+                     "FROM herramienta h " +
+                     "JOIN inventario i ON h.codigoherramienta = i.codigoherramienta " +
+                     "WHERE i.codigocontenedor = ?";
+
+        PreparedStatement ps = cj.prepareStatement(sql);
+        ps.setString(1, contenedor.getCodigoContenedor());
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String nombreHerramienta = rs.getString("nombreherramienta");
+            String codigoHerramienta = rs.getString("codigoherramienta");
+            String cantidadHerramientas = rs.getString("cantidaddeherramientas");
+            Herramienta herramienta = new Herramienta(nombreHerramienta, codigoHerramienta, cantidadHerramientas);
+            herramientas.add(herramienta);
+        }
+
+        rs.close();
+        ps.close();
+        desconectar(cj);
+        return herramientas;
+    }
+    
+     public void removeHerramienta(String codigoH, Herramienta h) throws SQLException {
+        Connection cn = conectar();
+        Statement st = cn.createStatement();
+        removeContenedorInInventario(codigoH);
+        removeHerramientaInInventario(codigoH, h);
+        st.executeUpdate("DELETE FROM herramienta WHERE codigoherramienta = '" + codigoH + "';");
+        st.close();
+        desconectar(cn);
+    }
+
+    private void removeHerramientaInInventario(String codigoH, Herramienta h) throws SQLException {
+        Connection cn = conectar();
+        Statement st = cn.createStatement();
+        removeContenedorInInventario(codigoH);
+        st.executeUpdate("DELETE FROM inventario WHERE codigoherramienta = '" + codigoH + "';");
+        st.close();
+        desconectar(cn);
+    }
+    
+     public void removeContenedor(String codigoC, Contenedor c) throws SQLException {
+        Connection cn = conectar();
+        Statement st = cn.createStatement();
+        removeContenedorInInventario(codigoC);
+        st.executeUpdate("DELETE FROM contenedor WHERE codigocontenedor = '" + codigoC + "';");
+        st.close();
+        desconectar(cn);
+    }
+
+    private void removeContenedorInInventario(String codigoC) throws SQLException {
+        Connection cn = conectar();
+        Statement st = cn.createStatement();
+        st.executeUpdate("DELETE FROM inventario WHERE codigoContenedor = '" + codigoC + "';");
+        st.close();
+        desconectar(cn);
+    }
+
+
     
    
    

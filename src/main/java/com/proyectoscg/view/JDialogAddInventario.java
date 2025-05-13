@@ -31,13 +31,20 @@ public class JDialogAddInventario extends javax.swing.JDialog {
             controlador = Controlador.getInstance();
             herramientas = controlador.getAllHerramientas();
             contenedores = controlador.getAllContenedores();
-            
+            String peque = "";
             for (Herramienta h : herramientas){
-                jComboBoxMostrarHerramientas.addItem(h.getCodigoHerramienta() + " - " + h.getNombreHerramienta());
+                if (h.isSmall()){
+                    peque = " herramienta.Pequeña";
+                    
+                }
+                else {
+                    peque = " herramienta.Grande";
+                }
+                jComboBoxMostrarHerramientas.addItem(h.getCodigoHerramienta() + " - " + h.getNombreHerramienta() + " - " + peque ) ;
             }
             
             for (Contenedor c : contenedores){
-                jComboBoxMostrarContenedores.addItem(c.getCodigoContenedor());
+                jComboBoxMostrarContenedores.addItem(c.getCodigoContenedor() + " - capacidad disponible: " + controlador.capacidadDisponible(c));
             }
             
         } catch (SQLException ex) {
@@ -72,6 +79,7 @@ public class JDialogAddInventario extends javax.swing.JDialog {
         jComboBoxMostrarContenedores = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Añadir Inventario");
 
         jComboBoxMostrarHerramientas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione el código de la Herramienta" }));
         jComboBoxMostrarHerramientas.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +132,7 @@ public class JDialogAddInventario extends javax.swing.JDialog {
 
         jLabel5.setText("Cantidad de Unidades a Añadir:");
 
-        jSpinnerUnidadesAdd.setModel(new javax.swing.SpinnerNumberModel(1, 1, 50, 1));
+        jSpinnerUnidadesAdd.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
 
         jLabel3.setText("Código del Contenedor :");
 
@@ -189,15 +197,20 @@ public class JDialogAddInventario extends javax.swing.JDialog {
         try {
             int indexHerramienta = jComboBoxMostrarHerramientas.getSelectedIndex()-1;
             Herramienta herramientaSeleccionada = herramientas.get(indexHerramienta);
-            int unidadesAdd = (int) jSpinnerUnidadesAdd.getValue();
-            int indexContenedor = jComboBoxMostrarContenedores.getSelectedIndex()-1;
-            Contenedor contenedorSeleccionado = contenedores.get(indexContenedor);
-            if (controlador.isCabenUnidades(contenedorSeleccionado , unidadesAdd)){
-                controlador.addInventario(herramientaSeleccionada, contenedorSeleccionado,unidadesAdd);
-                JOptionPane.showMessageDialog(this, "Inventario añadido con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
-                cleanField();
+             if (!herramientaSeleccionada.isSmall()) {
+                JOptionPane.showMessageDialog(this, "Solo se puede asignar una herramienta pequeña a un contenedor", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-
+            else{
+                int unidadesAdd = (int) jSpinnerUnidadesAdd.getValue();
+                int indexContenedor = jComboBoxMostrarContenedores.getSelectedIndex()-1;
+                Contenedor contenedorSeleccionado = contenedores.get(indexContenedor);
+                if (controlador.isCabenUnidades(contenedorSeleccionado , unidadesAdd)){
+                    controlador.addInventario(herramientaSeleccionada, contenedorSeleccionado,unidadesAdd);
+                    JOptionPane.showMessageDialog(this, "Inventario añadido con éxito", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+                    cleanField();
+                } 
+            }
+            
         }
 
         catch (Excepciones ex) {

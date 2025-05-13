@@ -41,6 +41,11 @@
       </Properties>
     </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar3">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="99" red="99" type="rgb"/>
+        </Property>
+      </Properties>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu8">
           <Properties>
@@ -76,14 +81,17 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu9">
+        <Menu class="javax.swing.JMenu" name="jEliminarContenedor">
           <Properties>
             <Property name="text" type="java.lang.String" value="+ Opciones"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jEliminarContenedorActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuMostrarHerramientas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar Herramientas"/>
+                <Property name="text" type="java.lang.String" value="Tabla de Herramientas"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuMostrarHerramientasActionPerformed"/>
@@ -91,21 +99,43 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuMostrarContenedores">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar Contendores"/>
+                <Property name="text" type="java.lang.String" value="Tabla de Contenedores"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuMostrarContenedoresActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuMostrarInventario">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuMostrarInventarioPorContenedor">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Mostrar Inventario por Contenedores"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuMostrarInventarioPorContenedorActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jDeleteHerramienta">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Eliminar Herramienta"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jDeleteHerramientaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jDeleteContenedor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Eliminar Contenedor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jDeleteContenedorActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuSalir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuSalirActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -136,26 +166,36 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="30" max="32767" attributes="0"/>
-              <Component id="jLabel2" min="-2" pref="622" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" pref="130" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="79" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="64" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="64" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" pref="96" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" pref="103" max="-2" attributes="0"/>
-              <EmptySpace pref="117" max="32767" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -174,7 +214,14 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="24" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Seleccione una opci&#xf3;n del men&#xfa; de la barra superior"/>
+        <Property name="text" type="java.lang.String" value="Escoja una opci&#xf3;n del men&#xfa; de la barra superior"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Adobe Express - file (3).png"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>

@@ -62,7 +62,7 @@ public class Controlador {
     }
     
     public void addInventario(Herramienta h , Contenedor c, int unidadesAdd) throws SQLException{
-        if (dao.existHerramienta(h)){  //aquí deberíamos hacer un update porque no se puede repetir el mismo código dentro del inventario
+        if (dao.comprobarHerramientaContenedor(h,c)){  
             dao.updateInventario(h , c , unidadesAdd);
         }
         else{
@@ -78,10 +78,10 @@ public class Controlador {
         return true;
     }
     
-//    public int capacidadDisponible (Contenedor c) throws SQLException{
-//        return (c.getCapacidadContenedor() - dao.sumaUnidadesContenedor(c) );
-//    } 
-//    
+    public int capacidadDisponible (Contenedor c) throws SQLException{
+        return (c.getCapacidadContenedor() - dao.sumaUnidadesContenedor(c) );
+    } 
+    
     public List<Herramienta> getAllHerramientas() throws SQLException {
         return dao.selectAllHerramientas();
     }
@@ -89,6 +89,20 @@ public class Controlador {
      public List<Contenedor> getAllContenedores() throws SQLException {
         return dao.selectAllContenedores();
     }
+     
+      public List<Herramienta> getHerramientasPorContenedor(Contenedor c) throws SQLException {
+        return dao.obtenerPorContenedor(c);
+    }
+    
+    
+     public void removeHerramienta(String codigoH, Herramienta h) throws SQLException{
+        dao.removeHerramienta(codigoH, h);
+    }
+    
+    public void removeContenedor(String codigoC, Contenedor c) throws SQLException{
+        dao.removeContenedor(codigoC, c);
+    }
+
     
     
         
