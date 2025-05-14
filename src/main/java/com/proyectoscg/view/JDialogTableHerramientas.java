@@ -32,7 +32,7 @@ public class JDialogTableHerramientas extends javax.swing.JDialog {
 
     public void updateTable() throws SQLException {
         DefaultTableModel tablaHerramienta = (DefaultTableModel) jTableHerramientas.getModel();
-        tablaHerramienta.setColumnIdentifiers(new String[]{"Código", "Nombre", "Pequeña"});
+        tablaHerramienta.setColumnIdentifiers(new String[]{"Código", "Nombre", "Ubicación"});
           jTableHerramientas.setModel(tablaHerramienta);
           jTableHerramientas.getColumnModel().getColumn(0).setPreferredWidth(130);
           jTableHerramientas.getColumnModel().getColumn(1).setPreferredWidth(130);
