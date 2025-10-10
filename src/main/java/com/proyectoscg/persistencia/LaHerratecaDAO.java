@@ -250,7 +250,7 @@ public class LaHerratecaDAO {
      private Connection conectar() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/laherrateca";
         String user = "root";
-        String pass = "Asdqwe123";
+        String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);
         return c;
     }
